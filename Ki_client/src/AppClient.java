@@ -20,7 +20,7 @@ public class AppClient {
 	
 	public void connect() throws IOException {
 
-		String ip = "192.168.137.96" ;//EV3
+		String ip = "192.168.137.254" ;//EV3
 		int port = 5000;
 		java.net.Socket socket = new java.net.Socket(ip,port); // verbindet sich mit dem Server
 		String send = "Start";

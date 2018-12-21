@@ -28,8 +28,8 @@ public class CommandCenter {
 
 	public CommandCenter() {
 
-		this.wheel1 = WheeledChassis.modelWheel(Motor.A, 56).offset(-50);
-		this.wheel2 = WheeledChassis.modelWheel(Motor.D, 56).offset(50);
+		this.wheel1 = WheeledChassis.modelWheel(Motor.A, 56).offset(-60);
+		this.wheel2 = WheeledChassis.modelWheel(Motor.D, 56).offset(60);
 		chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2},WheeledChassis.TYPE_DIFFERENTIAL);
 		mp = new MovePilot(chassis);
 
@@ -81,12 +81,12 @@ public class CommandCenter {
 	}
 	public void turnRight(int angle) {
 		mp.setAngularSpeed(100);
-		mp.rotate(angle);
+		mp.rotate(-angle);
 		stop();
 	}
 	public void turnLeft(int angle) {
 		mp.setAngularSpeed(100);
-		mp.rotate(-angle);
+		mp.rotate(angle);
 		stop();
 	}
 	public void stop() {
