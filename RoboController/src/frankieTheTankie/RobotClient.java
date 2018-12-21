@@ -31,7 +31,7 @@ public class RobotClient
 			e.printStackTrace();
 		}	
 	}
-
+ 
 	public void connect() throws IOException
 	{		
 		System.out.println("Init");

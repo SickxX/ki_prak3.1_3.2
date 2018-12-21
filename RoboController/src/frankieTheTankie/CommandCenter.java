@@ -31,7 +31,7 @@ public class CommandCenter
 	private float[] sample;
 	private float distanceValue;
 	private int neckPosition = 0;
-
+ 
 	public CommandCenter() 
 	{
 		//TeamRot: (Motor.B, 40).offset(80)
