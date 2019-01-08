@@ -13,6 +13,8 @@ public class RobotServer
 {
 	public static void main(String[] args) throws IOException 
 	{
+		MapBuilder mb = new MapBuilder();
+		mb.build();
 		RobotServer server = new RobotServer();
 		try {
 			server.connect();
@@ -60,7 +62,7 @@ public class RobotServer
 		if(answer.equals("ACK")) // Success!
 		{
 			//Do absolutely nothing
-			Delay.msDelay(1000);
+			Thread.sleep(1000);
 		}
 		else if(answer.equals("FIN")) // Failure
 		{
