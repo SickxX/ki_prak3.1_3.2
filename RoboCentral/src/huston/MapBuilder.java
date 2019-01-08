@@ -69,6 +69,8 @@ public class MapBuilder {
 		p.add(label);
 
 		panel.add("Center", svgCanvas);
+		//file:C:/Users/SickxX/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
+		//file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
 		svgCanvas.setURI("file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg".toString());
 
 
