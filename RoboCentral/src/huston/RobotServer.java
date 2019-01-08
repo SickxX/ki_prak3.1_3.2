@@ -17,6 +17,7 @@ public class RobotServer
 		//ruft mapbuilder auf
 		MapBuilder mb = new MapBuilder();
 		mb.build();
+		//chris stinkt
 		RobotServer server = new RobotServer();
 		try {
 			server.connect();
