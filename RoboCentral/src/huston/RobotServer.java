@@ -13,6 +13,8 @@ public class RobotServer
 {
 	public static void main(String[] args) throws IOException 
 	{
+		
+		//ruft mapbuilder auf
 		MapBuilder mb = new MapBuilder();
 		mb.build();
 		RobotServer server = new RobotServer();
