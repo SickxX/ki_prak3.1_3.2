@@ -84,7 +84,7 @@ public class RobotClient
 					write(socket, "ACK");
 				}
 			} catch(Exception e) {
-				write(socket, "NACK");
+				write(socket, "FIN");
 				commandCenter.onKill();
 				socket.close();
 				break;

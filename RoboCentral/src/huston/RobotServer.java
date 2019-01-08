@@ -51,48 +51,6 @@ public class RobotServer
 			serverSocket.close();
 		}
 			
-//		write(client, "Sensors");
-//		System.out.println("00. " + read(client));
-//		Delay.msDelay(2000);
-//		write(client, "Forward 500");
-//		Delay.msDelay(2000);
-//		write(client, "Sensors");
-//		System.out.println("00. " + read(client));
-//		Delay.msDelay(2000);
-//		write(client, "TurnLeft 90");
-//		Delay.msDelay(2000);
-//		write(client, "TurnRight 270");
-//		Delay.msDelay(2000);
-//		write(client, "Forward 500");
-//		Delay.msDelay(2000);
-//		write(client, "Sensors");
-//		System.out.println("01." + read(client));
-//		Delay.msDelay(2000);
-//		write(client, "TurnLeft 180");
-//		Delay.msDelay(2000);
-//		write(client, "Sensors");
-//		System.out.println("02" + read(client));
-//		Delay.msDelay(2000);
-//		write(client, "Kill");
-//		client.close();
-//		serverSocket.close();
-//		while(true)
-//		{
-//			String command = read(client);
-//			if(command.equals("Dead"))
-//			{
-//				break;
-//			}
-//			else if(command.equals("Start"))
-//			{
-//				write(socket, "Forward");
-//			}
-//			else
-//			{
-//				System.out.println(command);
-//				write()
-//			}
-//		}
 	}
 	
 	public void call(java.net.Socket socket, String command) throws Exception
@@ -104,7 +62,7 @@ public class RobotServer
 			//Do absolutely nothing
 			Delay.msDelay(1000);
 		}
-		else if(answer.equals("NACK")) // Failure
+		else if(answer.equals("FIN")) // Failure
 		{
 			throw new Exception("Clientside Error by " + command);
 		}
