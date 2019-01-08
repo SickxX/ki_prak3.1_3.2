@@ -23,6 +23,7 @@ public class MapBuilder {
 		frame = f;
 	}
 	
+	//ist für Robotserver nötig
 	public MapBuilder() {
 		
 	}
