@@ -31,7 +31,7 @@ public class MapBuilder {
 
 	public void build() {
 		// Create a new JFrame.
-		JFrame f = new JFrame("Batik");
+		JFrame f = new JFrame("Map");
 		MapBuilder app = new MapBuilder(f);
 
 		// Add components to the frame.
@@ -49,9 +49,6 @@ public class MapBuilder {
 
 	// The frame.
 	protected JFrame frame;
-
-	// The "Load" button, which displays up a file chooser upon clicking.
-	protected JButton button = new JButton("Load...");
 
 	// The status label.
 	protected JLabel label = new JLabel();
