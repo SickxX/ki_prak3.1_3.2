@@ -3,7 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.lejos.ev3.ldt.LEJOS_EV3_LIBRARY_CONTAINER/"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/BatikChrisLib"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Batik Lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

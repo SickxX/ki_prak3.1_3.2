@@ -12,7 +12,7 @@ public class RobotServer
 	{
 		MapContainer mp = new MapContainer();
 		//ruft mapbuilder auf
-		MapBuilder mb = new MapBuilder();
+//		MapBuilder mb = new MapBuilder();
 //		mb.build();
 		//chris stinkt
 		RobotServer server = new RobotServer();
