@@ -65,16 +65,11 @@ public class MapBuilder {
 	public JComponent createComponents() {
 		// Create a panel and add the button, status label and the SVG canvas.
 		final JPanel panel = new JPanel(new BorderLayout());
-		Random rand1 = new Random();
-		int x,y = 0;
-		for (int i=0;i<mca.M;i++) {
-			x = rand1.nextInt(6000);
-			y = rand1.nextInt(1500);
-			mca.addNewParticle(x, y);
-		}
 
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
 		p.add(label);
+		
 
 		panel.add("Center", svgCanvas);
 		//file:C:/Users/SickxX/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg

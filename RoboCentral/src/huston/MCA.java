@@ -13,7 +13,9 @@ public class MCA {
 	private int r1,r2;
 	private Random rand1 = new Random();
 
-	
+	public ArrayList<Particle> getParticle(){
+		return partMenge;
+	}
 	public void addNewParticle(int x, int y) {
 		partMenge.add(new Particle(x, y));
 	}
@@ -22,7 +24,7 @@ public class MCA {
 		partMenge.add(p);
 	}
 	
-	public ArrayList<Particle> generateParticles(int p){
+	public void generateParticles(int p){
 		partMenge.clear();
 		
 		int i = 0;
@@ -32,13 +34,8 @@ public class MCA {
 			//r2 für yAchse
 			r1 = rand1.nextInt(6000);
 			r2 = rand1.nextInt(1500);
-			partMenge.add(new Particle(r1, r2));
-			i++;
-			
+			partMenge.add(new Particle(i, r1, r2));
+			i++;	
 		}
-		
-		
-		return partMenge;
 	}
-
 }
