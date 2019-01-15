@@ -10,10 +10,10 @@ public class RobotServer
 {
 	public static void main(String[] args) throws IOException 
 	{
-		
+		MapContainer mp = new MapContainer();
 		//ruft mapbuilder auf
 		MapBuilder mb = new MapBuilder();
-		mb.build();
+//		mb.build();
 		//chris stinkt
 		RobotServer server = new RobotServer();
 		try {

@@ -1,8 +1,10 @@
 package huston;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -19,7 +21,7 @@ import org.apache.batik.swing.svg.GVTTreeBuilderEvent;
 import org.apache.batik.swing.svg.SVGDocumentLoaderAdapter;
 import org.apache.batik.swing.svg.SVGDocumentLoaderEvent;
 
-public class MapBuilder {
+public class MapBuilder extends JPanel {
 	
 	MCA mca= new MCA();
 
@@ -74,7 +76,7 @@ public class MapBuilder {
 		panel.add("Center", svgCanvas);
 		//file:C:/Users/SickxX/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
 		//file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
-		svgCanvas.setURI("file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg".toString());
+		svgCanvas.setURI("3.2_Houses-1819.svg".toString());
 		
 		
 
@@ -107,7 +109,18 @@ public class MapBuilder {
 				label.setText("");
 			}
 		});
-
+		
 		return panel;
 	}
+	public void paint(Graphics g) {
+		ArrayList<Particle> particles =  mca.getParticle();
+		int x,y;
+//		for (int i=0;i<particles.size();i++) {
+//			x = particles.get(i).getX();
+//			y = particles.get(i).getY();
+//			g.drawLine(x,y,x,y);
+//		}
+	    g.drawLine(25, 25, 120, 120);
+	  
+	  }
 }
