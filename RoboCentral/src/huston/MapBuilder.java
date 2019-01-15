@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -18,6 +20,8 @@ import org.apache.batik.swing.svg.SVGDocumentLoaderAdapter;
 import org.apache.batik.swing.svg.SVGDocumentLoaderEvent;
 
 public class MapBuilder {
+	
+	MCA mca= new MCA();
 
 	public MapBuilder(JFrame f) {
 		frame = f;
@@ -61,6 +65,13 @@ public class MapBuilder {
 	public JComponent createComponents() {
 		// Create a panel and add the button, status label and the SVG canvas.
 		final JPanel panel = new JPanel(new BorderLayout());
+		Random rand1 = new Random();
+		int x,y = 0;
+		for (int i=0;i<mca.M;i++) {
+			x = rand1.nextInt(6000);
+			y = rand1.nextInt(1500);
+			mca.addNewParticle(x, y);
+		}
 
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		p.add(label);
@@ -69,6 +80,8 @@ public class MapBuilder {
 		//file:C:/Users/SickxX/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
 		//file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg
 		svgCanvas.setURI("file:/C:/Users/MaHP/git/ki_prak3.1_3.2/RoboCentral/3.2_Houses-1819.svg".toString());
+		
+		
 
 
 		// Set the JSVGCanvas listeners.
