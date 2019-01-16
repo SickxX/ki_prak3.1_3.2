@@ -10,7 +10,6 @@ public class MCA {
 
 	private ArrayList<Particle> partMenge = new ArrayList<>();
 	private static final float SCALE = 1f;
-	protected final static int M = 1000; 
 	private double r1,r2;
 	private float angle;
 	private Random rand1 = new Random();

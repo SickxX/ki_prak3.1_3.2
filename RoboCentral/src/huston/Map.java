@@ -9,6 +9,8 @@ import java.util.Collections;
 
 public class Map {
 
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 150;
 	private static final float SCALE = 1f;
 	public static final Color DEFAULT = Color.BLACK;
 	public static final int CLUSTERSIZE = 50;
@@ -42,6 +44,7 @@ public class Map {
 	
 	public void generateShape()
 	{
+		
 		// --- horizontal Lines only!
 		ArrayList<Line> horizontals = new ArrayList<>();
 		for(Line l : lines)
@@ -55,13 +58,20 @@ public class Map {
 		
 		for(int i = 0; i < horizontals.size() - 1; i+=2)
 		{
-			int x1 = horizontals.get(i).getX1();
-			int y1 = horizontals.get(i).getY1();
-			int x2 = horizontals.get(i+1).getX2();
-			int y2 = horizontals.get(i+1).getY2();
-			int dx = x2 - x1;
-			int dy = y2 - y1;
-			shape.add(new Rectangle(x1, y1, dx, dy));
+			int upperX1 = horizontals.get(i).getX1();
+			int upperX2 = horizontals.get(i).getX2();
+			int upperY = horizontals.get(i).getY2();
+			
+			// --- TEST
+			shape.add(new Rectangle(upperX1, 0, upperX2 - upperX1, upperY));
+			
+			int lowerX1 = horizontals.get(i+1).getX1();
+			int lowerX2 = horizontals.get(i+1).getX2();
+			int lowerY = horizontals.get(i+1).getY1();
+			shape.add(new Rectangle(lowerX1, lowerY, lowerX2 - lowerX1, HEIGHT - lowerY));
+
+//			int dx = x2 - x1;
+//			int dy = y2 - y1;
 		}
 		
 	}
@@ -80,7 +90,12 @@ public class Map {
 			lines.get(i).draw(g,SCALE);
 			System.out.println(i+1 +". Linie " + lines.get(i).getY1()+ " "
 			+ lines.get(i).getX1()+ " " +lines.get(i).getY2()+ " " +lines.get(i).getX2() + " Length: " + lines.get(i).length());
-		}	
+		}
+		
+//		for(Rectangle r: shape)
+//		{
+//			g.drawRect(r.x, r.y, r.width, r.height);
+//		}
 	}
 	
 	public boolean isInside(int x, int y)
@@ -89,9 +104,9 @@ public class Map {
 		{
 			if(r.contains(new Point(x, y)))
 			{
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 }
