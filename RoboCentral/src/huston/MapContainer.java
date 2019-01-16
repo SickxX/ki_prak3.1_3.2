@@ -25,7 +25,7 @@ public class MapContainer {
 
 		frame.add(mp);
 
-		frame.setSize(700, 300);
+		frame.setSize(650, 200);
 		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
