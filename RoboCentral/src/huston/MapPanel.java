@@ -8,11 +8,12 @@ import javax.swing.JPanel;
 public class MapPanel extends JPanel{
 
 public Map map;
-public MCA mca = new MCA();
+public MCA mca;
 	
 	public MapPanel(Map m)
 	{
 		this.map = m;
+		mca = new MCA(map);
 		mca.generateParticles(10000);
 	}
 	
