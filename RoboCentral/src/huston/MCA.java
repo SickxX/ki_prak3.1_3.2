@@ -57,11 +57,11 @@ public class MCA {
 			r1 = rand1.nextDouble()*600;
 			r2 = rand1.nextDouble()*150;
 			angle = rand1.nextFloat()*360;
+
 			if(map.isInside((int)r1, (int)r2)) {
-				partMenge.add(new Particle(i, r1, r2));
+				partMenge.add(new Particle(i, r1, r2,angle));
 				i++;					
 			}
-
 		}
 	}
 	public void moveParticles(int distance) {
