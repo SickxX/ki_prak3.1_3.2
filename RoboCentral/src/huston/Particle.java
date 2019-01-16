@@ -72,6 +72,7 @@ public class Particle {
 	 * @param distance distance in centimeters, distance that the particle moves
 	 */
 	public void moveParticle(int distance) {
+		
 		setY(y + Math.sin(getAngle())*distance);
 		setX(x + Math.cos(getAngle())*distance);
 	}	

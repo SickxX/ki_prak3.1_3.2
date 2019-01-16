@@ -17,6 +17,10 @@ public class MapContainer {
 		start();
 		mp.repaint();
 
+		
+		
+		
+
 	}
 
 	public void start()

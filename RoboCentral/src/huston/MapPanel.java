@@ -25,5 +25,7 @@ public MCA mca = new MCA();
 			this.map.draw(g);
 			this.mca.draw(g);
 		}
+		
+		
     }
 }

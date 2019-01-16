@@ -26,11 +26,13 @@ public class MCA {
 		for(int i = 0; i < partMenge.size(); i++)
 		{
 			partMenge.get(i).draw(g,SCALE);
-			System.out.println(partMenge.get(i).getAngle());
+//			System.out.println(partMenge.get(i).getAngle());
 		}	
 		System.out.println("particles " + partMenge.size());
+//		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() + " " + partMenge.get(1).getAngle());
+//		moveParticles(20);
+//		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() );
 	}
-
 	public void addNewParticle(int x, int y) {
 		partMenge.add(new Particle(x, y));
 	}
