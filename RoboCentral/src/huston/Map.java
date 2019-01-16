@@ -7,6 +7,10 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import math.Straight;
+import math.Utils;
+import math.Vector;
+
 public class Map {
 
 	private static final int WIDTH = 600;
@@ -108,5 +112,49 @@ public class Map {
 			}
 		}
 		return true;
+	}
+	
+	/**
+	 * Wird noch schön gemacht, versprochen ^^
+	 * @param s
+	 * @return
+	 */
+	public Vector closestIntersection(Straight s)
+	{
+		Vector result = new Vector(0, 0);
+		double minDist = Double.MAX_VALUE;
+		for(Rectangle r : shape)
+		{
+			Straight vert1 = new Straight(new Vector((int)r.x, (int)r.y), new Vector(0, 1));
+			Straight vert2 = new Straight(new Vector((int)r.x, (int)r.y), new Vector(1, 0));
+			Straight vert3 = new Straight(new Vector((int)r.x + r.width, (int)r.y + r.height), new Vector(1, 0));
+			Straight vert4 = new Straight(new Vector((int)r.x + r.width, (int)r.y + r.height), new Vector(0, 1));
+			
+			Vector res1 = Straight.intersects(s, vert1);
+			Vector res2 = Straight.intersects(s, vert2);
+			Vector res3 = Straight.intersects(s, vert3);
+			Vector res4 = Straight.intersects(s, vert4);
+			
+			double dist1 = Vector.distance(res1, s.getPosition());
+			double dist2 = Vector.distance(res2, s.getPosition());
+			double dist3 = Vector.distance(res3, s.getPosition());
+			double dist4 = Vector.distance(res4, s.getPosition());
+			
+			double winner = Utils.min(dist1, dist2, dist3, dist4);
+			if(winner < minDist)
+			{
+				System.out.println("I'm in: " + winner);
+				minDist = winner;
+				if(winner == dist1)
+					result = res1;
+				else if(winner == dist2)
+					result = res2;
+				else if(winner == dist3)
+					result = res3;
+				else if(winner == dist4)
+					result = res4;
+			}
+		}
+		return result;
 	}
 }

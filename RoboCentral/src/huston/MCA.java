@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import math.Straight;
+import math.Vector;
+
 
 public class MCA {
 
@@ -59,6 +62,11 @@ public class MCA {
 				partMenge.add(new Particle(i, r1, r2,angle));
 				i++;					
 			}
+		}
+		
+		for(Particle part : partMenge)
+		{
+			part.recalculate(0, 0, 0, map);
 		}
 	}
 	public void moveParticles(int distance) {

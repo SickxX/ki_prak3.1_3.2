@@ -3,11 +3,13 @@ package huston;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.Vector;
+
+import math.Straight;
+import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 100;
 	
 	protected double id,x,y;
 	protected double[] dir;
@@ -80,11 +82,13 @@ public class Particle {
 	 * @param left -90 degree
 	 * @param right 90 degree
 	 */
-	public void recalculate(float forward, float left, float right)
+	public void recalculate(float forward, float left, float right, Map m)
 	{
 		float dForward = 0;
 		
-		Rectangle r = new Rectangle(0, 0, 100, 100);
+		Straight view = new Straight(new Vector(x, y), new Vector(1, 0, angle));
+		System.out.println(" ------------ Closest: " + m.closestIntersection(view));
+		
 		
 
 	}
