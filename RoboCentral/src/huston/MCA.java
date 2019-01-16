@@ -15,6 +15,11 @@ public class MCA {
 	private float angle;
 	private Random rand1 = new Random();
 	private Map map;
+	
+	public MCA(Map map)
+	{
+		this.map = map;
+	}
 
 
 	public ArrayList<Particle> getParticle(){
@@ -47,12 +52,14 @@ public class MCA {
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
 			//r2 für yAchse
-
 			r1 = rand1.nextDouble()*600;
 			r2 = rand1.nextDouble()*150;
 			angle = rand1.nextFloat()*360;
-			partMenge.add(new Particle(i, r1, r2,angle));
-			i++;	
+
+			if(map.isInside((int)r1, (int)r2)) {
+				partMenge.add(new Particle(i, r1, r2,angle));
+				i++;					
+			}
 		}
 	}
 	public void moveParticles(int distance) {
