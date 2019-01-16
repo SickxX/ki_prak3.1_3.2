@@ -12,6 +12,10 @@ public class Map {
 	private ArrayList<Line>  lines;
 
 
+	public ArrayList<Line> getLines() {
+		return lines;
+	}
+
 	public Map(int n)
 	{
 		lines= new ArrayList<>();

@@ -1,5 +1,8 @@
 package huston;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Particle {
 
 	protected int id,x,y;
@@ -45,5 +48,15 @@ public class Particle {
 	public void setDir(int[] dir) {
 		this.dir = dir;
 	}
+	
+	public void draw(Graphics g, float scale)
+	{
+//		g.setColor(c);
+		g.fillOval(getX(), getY(), 3, 3);
+//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
+		g.setColor(Color.RED);
+		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
+	}
+	
 	
 }

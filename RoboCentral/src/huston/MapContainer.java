@@ -1,5 +1,7 @@
 package huston;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 public class MapContainer {
@@ -23,7 +25,8 @@ public class MapContainer {
 
 		frame.add(mp);
 
-		frame.setSize(1000, 600);
+		frame.setSize(700, 300);
+		frame.setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
