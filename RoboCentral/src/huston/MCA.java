@@ -14,6 +14,11 @@ public class MCA {
 	private int r1,r2;
 	private Random rand1 = new Random();
 	private Map map;
+	
+	public MCA(Map map)
+	{
+		this.map = map;
+	}
 
 	public ArrayList<Particle> getParticle(){
 		return partMenge;
@@ -44,10 +49,12 @@ public class MCA {
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
 			//r2 für yAchse
-			r1 = rand1.nextInt(6000);
-			r2 = rand1.nextInt(1500);
-			partMenge.add(new Particle(i, r1, r2));
-			i++;	
+			r1 = rand1.nextInt(600);
+			r2 = rand1.nextInt(150);
+			if(map.isInside(r1, r2)) {
+				partMenge.add(new Particle(i, r1, r2));
+				i++;					
+			}
 		}
 	}
 }

@@ -14,12 +14,12 @@ public class RobotServer
 		MapContainer mp = new MapContainer();
 		
 		//Conection
-		RobotServer server = new RobotServer();
-		try {
-			server.connect();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
+//		RobotServer server = new RobotServer();
+//		try {
+//			server.connect();
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
 	}
  
 	public void connect() throws IOException 

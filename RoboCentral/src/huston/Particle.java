@@ -22,7 +22,7 @@ public class Particle {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		this.dir= dir;
+		this.dir = dir;
 	}
 	public int getId() {
 		return id;
