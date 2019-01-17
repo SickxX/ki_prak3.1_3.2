@@ -58,7 +58,7 @@ public class MCA {
 
 		int i = 0;
 		
-		addParticle(new Particle(0, 10, 90, 45));
+		addParticle(new Particle(0, 60, 90, 270));
 		addParticle(new Particle(0, 10, 90, 30));
 		
 		while( i < p ) {
