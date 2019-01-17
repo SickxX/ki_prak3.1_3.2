@@ -1,7 +1,9 @@
 package huston;
 
 import java.awt.Graphics;
-import java.util.Arrays;
+
+import math.Straight;
+import math.Vector;
 
 
 
@@ -82,6 +84,16 @@ public class Line {
 
 	public void setY2(int y2) {
 		this.y2 = y2;
+	}
+	
+	public Straight getStraight()
+	{
+		return new Straight(new Vector(x1, y1), new Vector(x2 - x1, y2 - y1));
+	}
+	
+	public boolean contains(Vector pos)
+	{		
+		return (x1 <= pos.getX() && pos.getX() <= x2) && (y1 <= pos.getY() && pos.getY() <= y2);
 	}
 	
 	public String toString()

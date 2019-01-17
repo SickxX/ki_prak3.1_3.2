@@ -21,6 +21,11 @@ public class MCA {
 	public MCA(Map map)
 	{
 		this.map = map;
+		
+		Straight s = new Straight(new Vector(0,0), new Vector(1,1));
+		Straight t = new Straight(new Vector(0, 4), new Vector(1, 0));
+		
+		System.out.println(Straight.intersects(s, t));
 	}
 
 
@@ -33,7 +38,7 @@ public class MCA {
 		for(int i = 0; i < partMenge.size(); i++)
 		{
 			partMenge.get(i).draw(g,SCALE);
-			System.out.println(partMenge.get(i).getAngle());
+//			System.out.println(partMenge.get(i).getAngle());
 		}	
 		System.out.println("particles " + partMenge.size());
 	}
@@ -50,7 +55,10 @@ public class MCA {
 		partMenge.clear();
 
 		int i = 0;
-
+		
+		addParticle(new Particle(0, 10, 90, 45));
+		addParticle(new Particle(0, 10, 90, 30));
+		
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
 			//r2 für yAchse
@@ -64,9 +72,19 @@ public class MCA {
 			}
 		}
 		
+		Vector v = partMenge.get(0).recalculate(0, 0, 0, map);
+//		Vector c = partMenge.get(0).getView().calculate(1000);
+//		addParticle(new Particle(c.getX(), c.getY()));
+		addParticle(new Particle(v.getX(), v.getY()));
+//		
+		v = partMenge.get(1).recalculate(0, 0, 0, map);
+//		Vector c = partMenge.get(0).getView().calculate(1000);
+//		addParticle(new Particle(c.getX(), c.getY()));
+		addParticle(new Particle(v.getX(), v.getY()));
+//		
 		for(Particle part : partMenge)
 		{
-			part.recalculate(0, 0, 0, map);
+			
 		}
 	}
 	public void moveParticles(int distance) {
