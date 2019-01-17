@@ -53,6 +53,10 @@ public class RobotClient
 					msg += commandCenter.distanceScan();
 					write(socket, msg);
 				}
+				else if(command.equals("Distance"))
+				{
+					write(socket, commandCenter.distanceScan());
+				}
 				else if(command.equals("Kill"))
 				{
 					commandCenter.onKill();

@@ -38,6 +38,7 @@ public class MCA {
 		recalculateParticles();
 		partMenge = resample();
 		recalculateParticles();
+		
 	}
 
 	public void draw(Graphics g)
