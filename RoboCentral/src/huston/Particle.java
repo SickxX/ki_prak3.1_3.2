@@ -5,41 +5,41 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import math.Straight;
+import math.Utils;
 import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 1000;
+
+	public static final int TOTAL_PARTICLES = 0;
+
 	
 	protected double id,x,y;
 	protected double[] dir;
-	protected float angle;
+	protected double angle;
 	private double probability;
 	
 	public Particle(double id, double x, double y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		probability = 1 / TOTAL_PARTICLES;
+		//probability = 1 / TOTAL_PARTICLES;
 	}
 	public Particle(double x, double y) {
-		this.x = x;
-		this.y = y;
+		this(-1, x, y);
 	}
 	
-	public Particle(double id, double x, double y, double[] dir) {
-		this.id = id;
-		this.x = x;
-		this.y = y;
-		this.dir = dir;
-	}
+//	public Particle(double id, double x, double y, double[] dir) {
+//		this.id = id;
+//		this.x = x;
+//		this.y = y;
+//		this.dir = dir;
+//	}
 	public Particle(double id, double x, double y, float angle) {
-		this.id = id;
-		this.x = x;
-		this.y = y;
+		this(id, x, y);
 		this.angle = angle;
 	}
-	public float getAngle() {
+	public double getAngle() {
 		return angle;
 	}
 	public double getId() {
@@ -82,15 +82,21 @@ public class Particle {
 	 * @param left -90 degree
 	 * @param right 90 degree
 	 */
-	public void recalculate(float forward, float left, float right, Map m)
+	public Vector recalculate(float forward, float left, float right, Map m)
 	{
 		float dForward = 0;
 		
-		Straight view = new Straight(new Vector(x, y), new Vector(1, 0, angle));
-		System.out.println(" ------------ Closest: " + m.closestIntersection(view));
+		Straight view = new Straight(new Vector(x, y), new Vector(1, 0, Utils.converteToRad(angle)));
+		Vector closest =  m.closestIntersection(view);
 		
-		
+		if(closest.getX() == -1 || closest.getY() == -1)
+		{
+			System.out.println("------------------------------------------------------------------------------");
+		}
 
+		System.out.println(" ------------ Closest: " + closest + "With angle: " + angle);
+		
+		return closest;
 	}
 	
 	
