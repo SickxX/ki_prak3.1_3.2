@@ -13,12 +13,12 @@ public class Particle {
 
 	public static final int TOTAL_PARTICLES = 0;
 
-	
+
 	protected double id,x,y;
 	protected double[] dir;
 	protected double angle;
 	private double probability;
-	
+
 	public Particle(double id, double x, double y) {
 		this.id = id;
 		this.x = x;
@@ -28,19 +28,22 @@ public class Particle {
 	public Particle(double x, double y) {
 		this(-1, x, y);
 	}
-	
-//	public Particle(double id, double x, double y, double[] dir) {
-//		this.id = id;
-//		this.x = x;
-//		this.y = y;
-//		this.dir = dir;
-//	}
+
+	//	public Particle(double id, double x, double y, double[] dir) {
+	//		this.id = id;
+	//		this.x = x;
+	//		this.y = y;
+	//		this.dir = dir;
+	//	}
 	public Particle(double id, double x, double y, float angle) {
 		this(id, x, y);
 		this.angle = angle;
 	}
 	public double getAngle() {
 		return angle;
+	}
+	public void setAngle(double angle) {
+		this.angle = angle;
 	}
 	public double getId() {
 		return id;
@@ -66,16 +69,16 @@ public class Particle {
 	public void setDir(double[] dir) {
 		this.dir = dir;
 	}
-	
+
 	public void draw(Graphics g, float scale)
 	{
-//		g.setColor(c);
+		//		g.setColor(c);
 		g.setColor(Color.RED);
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
-//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
+		//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
 		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
 	}
-	
+
 	/**
 	 * Recalculate this particles probability
 	 * @param forward 0 degree
@@ -85,29 +88,36 @@ public class Particle {
 	public Vector recalculate(float forward, float left, float right, Map m)
 	{
 		float dForward = 0;
-		
+
 		Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle)));
 
 		Vector closest =  m.closestIntersection(view);
-		
+
 		if(closest.getX() == -1 || closest.getY() == -1)
 		{
 			System.out.println("------------------------------------------------------------------------------");
 		}
 
 		System.out.println(" ------------ Closest: " + closest + "With angle: " + angle);
-		
+
 		return closest;
 	}
-	
-	
+
+
 	/**
 	 * 
 	 * @param distance distance in centimeters, distance that the particle moves
 	 */
 	public void moveParticle(int distance) {
-		
+
 		setY(y + Math.sin(getAngle())*distance);
 		setX(x + Math.cos(getAngle())*distance);
 	}	
+	public void turnParticle(int theta) {
+		if((getAngle()+theta) < 0 ) {
+			setAngle(360 +(getAngle()+theta));
+		}else if((getAngle()+theta) > 360){			
+			setAngle((getAngle()+theta) % 360);			
+		}
+	}
 }

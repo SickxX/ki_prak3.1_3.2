@@ -58,8 +58,9 @@ public class MCA {
 
 		int i = 0;
 		
-		addParticle(new Particle(0, 60, 90, 270));
-		addParticle(new Particle(0, 10, 90, 30));
+		addParticle(new Particle(0, 60, 90, 10));
+		
+//		addParticle(new Particle(0, 10, 90, 30));
 		
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
@@ -74,15 +75,15 @@ public class MCA {
 			}
 		}
 		
-		Vector v = partMenge.get(0).recalculate(0, 0, 0, map);
-//		Vector c = partMenge.get(0).getView().calculate(1000);
-//		addParticle(new Particle(c.getX(), c.getY()));
-		addParticle(new Particle(v.getX(), v.getY()));
-//		
-		v = partMenge.get(1).recalculate(0, 0, 0, map);
-//		Vector c = partMenge.get(0).getView().calculate(1000);
-//		addParticle(new Particle(c.getX(), c.getY()));
-		addParticle(new Particle(v.getX(), v.getY()));
+//		Vector v = partMenge.get(0).recalculate(0, 0, 0, map);
+////		Vector c = partMenge.get(0).getView().calculate(1000);
+////		addParticle(new Particle(c.getX(), c.getY()));
+//		addParticle(new Particle(v.getX(), v.getY()));
+////		
+//		v = partMenge.get(1).recalculate(0, 0, 0, map);
+////		Vector c = partMenge.get(0).getView().calculate(1000);
+////		addParticle(new Particle(c.getX(), c.getY()));
+//		addParticle(new Particle(v.getX(), v.getY()));
 //		
 		for(Particle part : partMenge)
 		{
@@ -92,6 +93,11 @@ public class MCA {
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {
 			p.moveParticle(distance);
+		}
+	}
+	public void turnParticles(int theta) {
+		for(Particle p : partMenge) {
+			p.turnParticle(theta);
 		}
 	}
 }
