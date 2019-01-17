@@ -4,13 +4,15 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import math.Straight;
+import math.Vector;
+
 
 public class MCA {
 
 
 	private ArrayList<Particle> partMenge = new ArrayList<>();
 	private static final float SCALE = 1f;
-	protected final static int M = 1000; 
 	private double r1,r2;
 	private float angle;
 	private Random rand1 = new Random();
@@ -62,6 +64,11 @@ public class MCA {
 				partMenge.add(new Particle(i, r1, r2,angle));
 				i++;					
 			}
+		}
+		
+		for(Particle part : partMenge)
+		{
+			part.recalculate(0, 0, 0, map);
 		}
 	}
 	public void moveParticles(int distance) {

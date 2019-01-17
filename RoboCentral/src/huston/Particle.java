@@ -2,17 +2,25 @@ package huston;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+
+import math.Straight;
+import math.Vector;
 
 public class Particle {
 
+	public static final int TOTAL_PARTICLES = 100;
+	
 	protected double id,x,y;
 	protected double[] dir;
 	protected float angle;
+	private double probability;
 	
 	public Particle(double id, double x, double y) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
+		probability = 1 / TOTAL_PARTICLES;
 	}
 	public Particle(double x, double y) {
 		this.x = x;
@@ -67,6 +75,25 @@ public class Particle {
 		g.setColor(Color.RED);
 		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
 	}
+	
+	/**
+	 * Recalculate this particles probability
+	 * @param forward 0 degree
+	 * @param left -90 degree
+	 * @param right 90 degree
+	 */
+	public void recalculate(float forward, float left, float right, Map m)
+	{
+		float dForward = 0;
+		
+		Straight view = new Straight(new Vector(x, y), new Vector(1, 0, angle));
+		System.out.println(" ------------ Closest: " + m.closestIntersection(view));
+		
+		
+
+	}
+	
+	
 	/**
 	 * 
 	 * @param distance distance in centimeters, distance that the particle moves
