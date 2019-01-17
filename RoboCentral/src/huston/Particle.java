@@ -62,20 +62,29 @@ public class Particle {
 		this.y = y;
 	}
 	
+	public String toString()
+	{
+		return "Partikel: " + id + ", x:" + x + ", y" + y + ", probability:" + probability; 
+	}
+	
+	public double getProbabitlity() {
+		return probability;
+	}
+	
 	public void draw(Graphics g, float scale)
 	{
 //		g.setColor(c);
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
+//		g.setColor(new Color(1, 0, 0, (float)(1)));
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
 //		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
 		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
 	}
 
 	/**
-	 * Recalculate this particles probability
-	 * @param forward 0 degree
-	 * @param left -90 degree
-	 * @param right 90 degree
+	 * Recalculates based on Scanned data
+	 * @param data The Scan result
+	 * @param map The Map
 	 */
 	public void recalculate(ArrayList<SensorData> data, Map map)
 	{

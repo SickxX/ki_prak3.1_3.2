@@ -2,7 +2,10 @@ package huston;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
+
+import javax.swing.RepaintManager;
 
 import huston.Sensor.SensorData;
 import math.Straight;
@@ -32,6 +35,8 @@ public class MCA {
 	public void start()
 	{
 		generateParticles(Particle.TOTAL_PARTICLES);
+		recalculateParticles();
+		partMenge = resample();
 		recalculateParticles();
 	}
 
@@ -89,10 +94,22 @@ public class MCA {
 			part.recalculate(data, map);
 		}
 		
-		// --- Resampling
-		int randomIndex = rand1.nextInt(partMenge.size());
-		
 	}
+	
+	public ArrayList<Particle> resample()
+	{
+		ArrayList<Particle> neL = new ArrayList<Particle>();
+		// --- Resampling
+		while(neL.size() < Particle.TOTAL_PARTICLES) {
+			int randomIndex = rand1.nextInt(partMenge.size());
+			if ( partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) {
+				neL.add(partMenge.get(randomIndex));
+			}
+		}
+		System.out.println(Arrays.toString(neL.toArray()));
+		return neL;
+	}
+	
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {
 			p.moveParticle(distance);
