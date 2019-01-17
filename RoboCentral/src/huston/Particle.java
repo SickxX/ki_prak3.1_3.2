@@ -86,7 +86,8 @@ public class Particle {
 	{
 		float dForward = 0;
 		
-		Straight view = new Straight(new Vector(x, y), new Vector(0, -1, Utils.converteToRad(angle)));
+		Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle)));
+
 		Vector closest =  m.closestIntersection(view);
 		
 		if(closest.getX() == -1 || closest.getY() == -1)

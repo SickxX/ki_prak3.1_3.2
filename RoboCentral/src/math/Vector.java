@@ -11,9 +11,9 @@ public class Vector
 		angle = 0;
 	}
 	
-	public Vector(double x, double y, double theta)
+	public Vector(double theta)
 	{
-		this(x, y);
+		this(0, -1);
 		rotate(theta);
 		angle = theta;
 	}
@@ -22,6 +22,7 @@ public class Vector
 	{
 		double x1 = x * (Math.cos(theta)) - y * (Math.sin(theta));
 		double y1 = x * (Math.sin(theta)) + y * (Math.cos(theta));
+
 		x = x1;
 		y = y1;
 	}
