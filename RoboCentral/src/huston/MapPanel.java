@@ -26,5 +26,7 @@ public MCA mca;
 			this.map.draw(g);
 			this.mca.draw(g);
 		}
+		
+		
     }
 }

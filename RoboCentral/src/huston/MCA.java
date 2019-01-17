@@ -43,8 +43,10 @@ public class MCA {
 //			System.out.println(partMenge.get(i).getAngle());
 		}	
 		System.out.println("particles " + partMenge.size());
+//		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() + " " + partMenge.get(1).getAngle());
+//		moveParticles(20);
+//		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() );
 	}
-
 	public void addNewParticle(int x, int y) {
 		partMenge.add(new Particle(x, y));
 	}
@@ -57,10 +59,7 @@ public class MCA {
 		partMenge.clear();
 
 		int i = 0;
-		
-		addParticle(new Particle(0, 10, 90, 180));
-	//	addParticle(new Particle(0, 10, 90, 30));
-		
+			
 		
 		// --- Fill with random Particles
 		while( i < p ) {
@@ -79,7 +78,6 @@ public class MCA {
 	
 	public void recalculateParticles()
 	{
-		
 		// --- Mockdata
 		ArrayList<SensorData> data = new ArrayList<>();
 		data.add(new SensorData(0, 10));
@@ -98,6 +96,11 @@ public class MCA {
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {
 			p.moveParticle(distance);
+		}
+	}
+	public void turnParticles(int theta) {
+		for(Particle p : partMenge) {
+			p.turnParticle(theta);
 		}
 	}
 }
