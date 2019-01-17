@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import huston.Sensor.SensorData;
 import math.Straight;
 import math.Vector;
 
@@ -21,16 +22,17 @@ public class MCA {
 	public MCA(Map map)
 	{
 		this.map = map;
-		
-		Straight s = new Straight(new Vector(0,0), new Vector(1,1));
-		Straight t = new Straight(new Vector(0, 4), new Vector(1, 0));
-		
-		System.out.println(Straight.intersects(s, t));
 	}
 
 
 	public ArrayList<Particle> getParticle(){
 		return partMenge;
+	}
+	
+	public void start()
+	{
+		generateParticles(Particle.TOTAL_PARTICLES);
+		recalculateParticles();
 	}
 
 	public void draw(Graphics g)
@@ -56,9 +58,11 @@ public class MCA {
 
 		int i = 0;
 		
-		addParticle(new Particle(0, 10, 90, 45));
-		addParticle(new Particle(0, 10, 90, 30));
+		addParticle(new Particle(0, 10, 90, 180));
+	//	addParticle(new Particle(0, 10, 90, 30));
 		
+		
+		// --- Fill with random Particles
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
 			//r2 für yAchse
@@ -71,21 +75,25 @@ public class MCA {
 				i++;					
 			}
 		}
+	}
+	
+	public void recalculateParticles()
+	{
 		
-		Vector v = partMenge.get(0).recalculate(0, 0, 0, map);
-//		Vector c = partMenge.get(0).getView().calculate(1000);
-//		addParticle(new Particle(c.getX(), c.getY()));
-		addParticle(new Particle(v.getX(), v.getY()));
-//		
-		v = partMenge.get(1).recalculate(0, 0, 0, map);
-//		Vector c = partMenge.get(0).getView().calculate(1000);
-//		addParticle(new Particle(c.getX(), c.getY()));
-		addParticle(new Particle(v.getX(), v.getY()));
-//		
+		// --- Mockdata
+		ArrayList<SensorData> data = new ArrayList<>();
+		data.add(new SensorData(0, 10));
+		data.add(new SensorData(45, 15));
+	
+		// --- Recalculate the Probability
 		for(Particle part : partMenge)
 		{
-			
+			part.recalculate(data, map);
 		}
+		
+		// --- Resampling
+		int randomIndex = rand1.nextInt(partMenge.size());
+		
 	}
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {

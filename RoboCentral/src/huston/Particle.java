@@ -2,18 +2,18 @@ package huston;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.util.ArrayList;
 
+import huston.Sensor.SensorData;
 import math.Straight;
 import math.Utils;
 import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 0;
+	public static final int TOTAL_PARTICLES = 10000;
 	
 	protected double id,x,y;
-	protected double[] dir;
 	protected double angle;
 	private double probability;
 	
@@ -21,7 +21,7 @@ public class Particle {
 		this.id = id;
 		this.x = x;
 		this.y = y;
-		//probability = 1 / TOTAL_PARTICLES;
+		probability = 1;
 	}
 	public Particle(double x, double y) {
 		this(-1, x, y);
@@ -58,19 +58,12 @@ public class Particle {
 	public void setY(double y) {
 		this.y = y;
 	}
-	public double[] getDir() {
-		return dir;
-	}
-	public void setDir(double[] dir) {
-		this.dir = dir;
-	}
-	
 	public void draw(Graphics g, float scale)
 	{
 //		g.setColor(c);
+		g.setColor(new Color(1, 0, 0, (float)(probability)));
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
 //		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
-		g.setColor(Color.RED);
 		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
 	}
 	
@@ -80,21 +73,26 @@ public class Particle {
 	 * @param left -90 degree
 	 * @param right 90 degree
 	 */
-	public Vector recalculate(float forward, float left, float right, Map m)
+	public void recalculate(ArrayList<SensorData> data, Map map)
 	{
-		float dForward = 0;
+		double error = 0;
 		
-		Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle)));
-		Vector closest =  m.closestIntersection(view);
-		
-		if(closest.getX() == -1 || closest.getY() == -1)
+		for(SensorData d: data)
 		{
-			System.out.println("------------------------------------------------------------------------------");
+			Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle + d.getRotation())));	
+			Vector closest =  map.closestIntersection(view);
+			
+			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
+			error += (Math.pow(distanceToClosest - d.getDistance(), 2));
 		}
-
-		System.out.println(" ------------ Closest: " + closest + "With angle: " + angle);
 		
-		return closest;
+		if(error != 0)
+			probability = 1 / error;
+		else 
+			probability = 1;
+		
+		if(probability > 1)
+			probability = 1;
 	}
 	
 	
