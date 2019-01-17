@@ -9,7 +9,7 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 100;
+	public static final int TOTAL_PARTICLES = 1000;
 	
 	protected double id,x,y;
 	protected double[] dir;
@@ -70,9 +70,9 @@ public class Particle {
 	public void draw(Graphics g, float scale)
 	{
 //		g.setColor(c);
+		g.setColor(Color.RED);
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
 //		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
-		g.setColor(Color.RED);
 		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
 	}
 	
