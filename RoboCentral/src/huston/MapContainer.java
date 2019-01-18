@@ -22,7 +22,12 @@ public class MapContainer {
 	{
 		return mp.getMCA();
 	}
-
+	
+	public void repaint()
+	{
+		mp.repaintAll();
+	}
+	
 	public void start()
 	{
 		JFrame frame = new JFrame("Graph");

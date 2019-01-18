@@ -1,15 +1,13 @@
 package huston;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import javax.swing.RepaintManager;
-
 import huston.Sensor.SensorData;
-import math.Straight;
-import math.Vector;
 
 
 public class MCA {
@@ -40,6 +38,14 @@ public class MCA {
 //		recalculateParticles();
 		
 	}
+	
+	public void doResampling()
+	{
+		System.out.println(Arrays.toString(partMenge.toArray()));
+		
+		partMenge = resample();
+		System.out.println("Done Resamoleibjakfgkaljghoigouaeifhis");
+	}
 
 	public void draw(Graphics g)
 	{
@@ -49,7 +55,6 @@ public class MCA {
 			
 //			System.out.println(partMenge.get(i).getAngle());
 		}	
-		System.out.println("particles " + partMenge.size());
 //		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() + " " + partMenge.get(1).getAngle());
 //		moveParticles(20);
 //		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() );
@@ -67,7 +72,7 @@ public class MCA {
 
 		int i = 0;
 			
-		
+		addParticle(new Particle(25, 75, 90));
 		// --- Fill with random Particles
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
@@ -90,10 +95,22 @@ public class MCA {
 //		data.add(new SensorData(0, 10));
 //		data.add(new SensorData(45, 15));
 	
+		double maxError = 0, minError = Double.MAX_VALUE;
 		// --- Recalculate the Probability
 		for(Particle part : partMenge)
 		{
 			part.recalculate(data, map);
+			if(part.getError() > maxError) maxError = part.getError();
+			if(part.getError() < minError) minError = part.getError();
+		}
+		
+		for(Particle part : partMenge)
+		{
+			part.normalize(maxError, minError);
+				if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
+				{
+					part.penalize();
+				}
 		}
 		
 	}

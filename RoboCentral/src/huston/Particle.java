@@ -11,11 +11,12 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 1;
 	
 	protected double x,y;
 	protected double angle;
 	private double probability;
+	private double error;
 
 	public Particle(double x, double y) {
 		this.x = x;
@@ -55,6 +56,11 @@ public class Particle {
 	public void setY(double y) {
 		this.y = y;
 	}
+	public double getError()
+	{
+		return error;
+	}
+	
 	
 	public String toString()
 	{
@@ -67,13 +73,11 @@ public class Particle {
 	
 	public void draw(Graphics g, float scale)
 	{
-//		g.setColor(c);
+		
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
-//		g.setColor(new Color(1, 0, 0, (float)(1)));
+//		g.setColor(new Color(1f, 0f, 0f));
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
-//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
-		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
-	}
+}
 
 	/**
 	 * Recalculates based on Scanned data
@@ -82,7 +86,7 @@ public class Particle {
 	 */
 	public void recalculate(ArrayList<SensorData> data, Map map)
 	{
-		double error = 0;
+		error = 0;
 		
 		for(SensorData d: data)
 		{
@@ -93,16 +97,27 @@ public class Particle {
 			error += (Math.pow(distanceToClosest - d.getDistance(), 2));
 		}
 		
-		if(error != 0)
-			probability = 1 / error;
-		else 
-			probability = 1;
-		
-		if(probability > 1)
-			probability = 1;
+//		if(error != 0)
+//			probability = 1 / error;
+//		else 
+//			probability = 1;
+//		
+//		if(probability > 1)
+//			probability = 1;
 
 	}
+	
+	public void normalize(double maxError, double minError)
+	{
 
+		double prev = probability;
+		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
+	}
+
+	public void penalize()
+	{
+		probability = 0;
+	}
 
 	/**
 	 * Moves Particle into the direction it is looking

@@ -13,8 +13,8 @@ import math.Vector;
 
 public class Map {
 
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 150;
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 150;
 	private static final float SCALE = 1f;
 	public static final Color DEFAULT = Color.BLACK;
 	public static final int CLUSTERSIZE = 50;
@@ -32,6 +32,9 @@ public class Map {
 		return lines;
 	}
 
+	public ArrayList<Rectangle> getShapes() {
+		return shape;
+	}
 
 	public void addLine(Line p) 
 	{
