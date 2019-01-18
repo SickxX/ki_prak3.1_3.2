@@ -14,7 +14,6 @@ public MCA mca;
 	{
 		this.map = m;
 		mca = new MCA(map);
-		mca.start();
 	}
 	
 	public MCA getMCA()

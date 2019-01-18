@@ -35,9 +35,9 @@ public class MCA {
 	public void start()
 	{
 		generateParticles(Particle.TOTAL_PARTICLES);
-		recalculateParticles();
-		partMenge = resample();
-		recalculateParticles();
+//		recalculateParticles();
+//		partMenge = resample();
+//		recalculateParticles();
 		
 	}
 
@@ -83,12 +83,12 @@ public class MCA {
 		}
 	}
 	
-	public void recalculateParticles()
+	public void recalculateParticles(ArrayList<SensorData> data)
 	{
-		// --- Mockdata
-		ArrayList<SensorData> data = new ArrayList<>();
-		data.add(new SensorData(0, 10));
-		data.add(new SensorData(45, 15));
+//		// --- Mockdata
+//		ArrayList<SensorData> data = new ArrayList<>();
+//		data.add(new SensorData(0, 10));
+//		data.add(new SensorData(45, 15));
 	
 		// --- Recalculate the Probability
 		for(Particle part : partMenge)
