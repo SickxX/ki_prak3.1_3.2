@@ -5,21 +5,34 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import huston.Sensor.SensorData;
 
 public class RobotServer 
 {
+
+	private static RobotServer server;
+	private MapContainer mc;
+	
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		MapContainer mp = new MapContainer();
+		server = new RobotServer();
+	}
+	
+	public RobotServer()
+	{
+		mc = new MapContainer();
+		mc.getMCA();
 		
+
 		//Conection
-//		RobotServer server = new RobotServer();
-//		try {
-//			server.connect();
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
+		try {
+		connect();
+	}catch(IOException e){
+		e.printStackTrace();
+	}
 	}
  
 	public void connect() throws IOException 
@@ -31,19 +44,42 @@ public class RobotServer
 		java.net.Socket client = waitForLogin(serverSocket);
 		System.out.println("Connected");
 		try{
-			call(client, "Sensors");
-			call(client, "Forward 500");
-			call(client, "Sensors");
-			call(client, "TurnLeft 90");
-			call(client, "TurnRight 270");
-			call(client, "Look 90");
-			call(client, "Look -180");
-			call(client, "Sensors");
-			call(client, "Forward 500");
-			call(client, "Sensors");
-			call(client, "TurnLeft 180");
-			call(client, "Sensors");
-			call(client, "Kill");
+//			call(client, "Sensors");
+//			call(client, "Forward 500");
+//			call(client, "Sensors");
+//			call(client, "TurnLeft 90");
+//			call(client, "TurnRight 270");
+//			call(client, "Look 90");
+//			call(client, "Look -180");
+//			call(client, "Sensors");
+//			call(client, "Forward 500");
+//			call(client, "Sensors");
+//			call(client, "TurnLeft 180");
+//			call(client, "Sensors");
+//			call(client, "Kill");
+			
+			//1. Partikel erzeugen
+			mc.getMCA().start();
+			delay(1000);
+			//2. Measure
+			measure(client, 5);
+			delay(1000);
+			//3. Action
+			for(int i = 0; i < 10; i++)
+			{
+				if(Math.random() * 2 > 1)
+				{
+					move(client, 50);
+					delay(1000);
+				}
+				else
+				{
+					turn(client, 45);
+					delay(1000);
+				}
+			}
+			//3. 
+			//3. 
 			
 		} catch(Exception e)	{
 			e.printStackTrace();
@@ -54,7 +90,7 @@ public class RobotServer
 			
 	}
 	
-	public void call(java.net.Socket socket, String command) throws Exception
+	public String call(java.net.Socket socket, String command) throws Exception
 	{
 		write(socket, command);
 		String answer = read(socket);
@@ -71,6 +107,7 @@ public class RobotServer
 		{
 			System.out.println(answer);			
 		}
+		return answer;
 	}
 
 	public java.net.Socket waitForLogin(java.net.ServerSocket serverSocket) throws IOException
@@ -93,5 +130,57 @@ public class RobotServer
 		int bSize = br.read(buffer, 0, 500);
 		String msg = new String(buffer, 0, bSize);
 		return msg;
+	}
+	
+	public void measure(java.net.Socket client, int samplesize) throws Exception
+	{
+		ArrayList<SensorData> data = new ArrayList<>();
+		
+		double step = 0.0;
+		if(samplesize % 2 == 1) {
+			step = (double)(samplesize - 1) / 2;
+			call(client, "Look 0");
+			data.add(new SensorData(0, Float.parseFloat(call(client, "Distance"))));
+		} else {
+			step = (double)(samplesize / 2);
+		}
+		
+		int i = -90;
+		int j = 90;
+		int run = (int) step;
+		while(run > 0) {
+			call(client, "Look " + i);
+			data.add(new SensorData(i, Float.parseFloat(call(client, "Distance"))));
+			call(client, "Look " + j);
+			data.add(new SensorData(j, Float.parseFloat(call(client, "Distance"))));
+			i += 90 / run;
+			j -= 90 / run;
+			run -= 1;
+		}
+		
+		mc.getMCA().recalculateParticles(data);
+	}
+	
+	public void move(java.net.Socket client, int distance) throws Exception
+	{
+		call(client, "Forward " + distance);
+		mc.getMCA().moveParticles(distance);
+		measure(client, 3);
+	}
+	
+	public void turn(java.net.Socket client, int theta) throws Exception
+	{
+		call(client, "Turn " + theta);
+		mc.getMCA().turnParticles(theta);
+		measure(client, 3);
+	}
+	
+	public void delay(long delay)
+	{
+		try {
+			Thread.sleep(delay);
+		}
+		catch(Exception e)
+		{}
 	}
 }

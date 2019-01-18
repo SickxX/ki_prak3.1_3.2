@@ -16,7 +16,11 @@ public class MapContainer {
 		mp = new MapPanel(map);
 		start();
 		mp.repaint();
-
+	}
+	
+	public MCA getMCA()
+	{
+		return mp.getMCA();
 	}
 
 	public void start()

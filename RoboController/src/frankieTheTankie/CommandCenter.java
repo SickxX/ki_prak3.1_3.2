@@ -101,6 +101,13 @@ public class CommandCenter
 		movePilot.setAngularSpeed(100);
 		movePilot.rotate(angle);
 		stop();
+	}	
+	
+	public void turn(int angle) 
+	{
+		movePilot.setAngularSpeed(100);
+		movePilot.rotate(angle);
+		stop();
 	}
 	
 	public void stop() 

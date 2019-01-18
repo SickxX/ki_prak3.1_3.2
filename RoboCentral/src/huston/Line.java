@@ -1,13 +1,22 @@
 package huston;
 
 import java.awt.Graphics;
-import java.util.Arrays;
+
+import math.Straight;
+import math.Vector;
 
 
 
 public class Line {
 	private int x1,x2,y1,y2;
 	
+	/**
+	 * Kontruktor der Linie, Werte werden automatisch sortiert
+	 * @param x1 erste (kleinere) X-Wert
+	 * @param y1 erste (kleinere) Y-Wert
+	 * @param x2 zweite (größere) X-Wert
+	 * @param y2 zweite (größere) Y-Wert
+	 */
 	public Line (int x1,int y1,int x2, int y2) {
 		
 		this.x1 = Math.min(x1, x2);
@@ -21,11 +30,20 @@ public class Line {
 		return Math.abs((x1 - x2) + (y1 - y2));
 	}
 	
+	/**
+	 * kontrolliert ob die Linie eine horizontale Linie ist
+	 * @return true wenn horizontal, sonst false
+	 */
 	public boolean isHorizontal()
 	{
 		return y1 == y2;
 	}
 	
+	/**
+	 * bringt die eingegelesenen Linien auf die gleiche Länge(50px)
+	 * @param clusterSize
+	 * @return
+	 */
 	public Line[] split(int clusterSize)
 	{
 		Line[] result = new Line[(int)(length() / clusterSize)];
@@ -82,6 +100,16 @@ public class Line {
 
 	public void setY2(int y2) {
 		this.y2 = y2;
+	}
+	
+	public Straight getStraight()
+	{
+		return new Straight(new Vector(x1, y1), new Vector(x2 - x1, y2 - y1));
+	}
+	
+	public boolean contains(Vector pos)
+	{		
+		return (x1 <= pos.getX() && pos.getX() <= x2) && (y1 <= pos.getY() && pos.getY() <= y2);
 	}
 	
 	public String toString()

@@ -14,7 +14,11 @@ public MCA mca;
 	{
 		this.map = m;
 		mca = new MCA(map);
-		mca.generateParticles(Particle.TOTAL_PARTICLES);
+	}
+	
+	public MCA getMCA()
+	{
+		return mca;
 	}
 	
 	@Override
@@ -26,5 +30,7 @@ public MCA mca;
 			this.map.draw(g);
 			this.mca.draw(g);
 		}
+		
+		
     }
 }
