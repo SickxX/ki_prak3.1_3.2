@@ -52,6 +52,7 @@ public class MCA {
 		for(int i = 0; i < partMenge.size(); i++)
 		{
 			partMenge.get(i).draw(g,SCALE);
+			
 //			System.out.println(partMenge.get(i).getAngle());
 		}	
 //		System.out.println(partMenge.get(1).getX() + " " + partMenge.get(1).getY() + " " + partMenge.get(1).getAngle());
@@ -71,7 +72,7 @@ public class MCA {
 
 		int i = 0;
 			
-		addParticle(new Particle(0,25, 75, 90));
+		addParticle(new Particle(25, 75, 90));
 		// --- Fill with random Particles
 		while( i < p ) {
 			//r1 zufallswert für die xAchse
@@ -81,7 +82,7 @@ public class MCA {
 			angle = rand1.nextFloat()*360;
 
 			if(map.isInside((int)r1, (int)r2)) {
-				partMenge.add(new Particle(i, r1, r2,angle));
+				partMenge.add(new Particle(r1, r2,angle));
 				i++;					
 			}
 		}
@@ -124,15 +125,22 @@ public class MCA {
 				neL.add(partMenge.get(randomIndex));
 			}
 		}
-		System.out.println(Arrays.toString(neL.toArray()));
+//		System.out.println(Arrays.toString(neL.toArray()));
 		return neL;
 	}
-	
+	/**
+	 * calls the moveParticle method for every particle
+	 * @param distance  distance in centimeters, distance that the particles move
+	 */
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {
 			p.moveParticle(distance);
 		}
 	}
+	/**
+	 * calls the turnParticle method for every particle
+	 * @param theta angle the particles turn
+	 */
 	public void turnParticles(int theta) {
 		for(Particle p : partMenge) {
 			p.turnParticle(theta);

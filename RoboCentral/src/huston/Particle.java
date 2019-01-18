@@ -13,19 +13,19 @@ public class Particle {
 
 	public static final int TOTAL_PARTICLES = 1;
 	
-	protected double id,x,y;
+	protected double x,y;
 	protected double angle;
 	private double probability;
 	private double error;
 
-	public Particle(double id, double x, double y) {
-		this.id = id;
+	public Particle(double x, double y) {
 		this.x = x;
 		this.y = y;
 		probability = 1;
 	}
-	public Particle(double x, double y) {
-		this(-1, x, y);
+	public Particle(double x, double y, double propability) {
+		this(x,y);
+		this.probability = propability;
 	}
 
 	//	public Particle(double id, double x, double y, double[] dir) {
@@ -34,8 +34,8 @@ public class Particle {
 	//		this.y = y;
 	//		this.dir = dir;
 	//	}
-	public Particle(double id, double x, double y, float angle) {
-		this(id, x, y);
+	public Particle(double x, double y, float angle) {
+		this(x, y);
 		this.angle = angle;
 	}
 	public double getAngle() {
@@ -43,12 +43,6 @@ public class Particle {
 	}
 	public void setAngle(double angle) {
 		this.angle = angle;
-	}
-	public double getId() {
-		return id;
-	}
-	public void setId(double id) {
-		this.id = id;
 	}
 	public double getX() {
 		return x;
@@ -70,7 +64,7 @@ public class Particle {
 	
 	public String toString()
 	{
-		return "Partikel: " + id + ", x:" + x + ", y" + y + ", probability:" + probability; 
+		return "Partikel: " + ", x:" + x + ", y" + y + ", probability:" + probability; 
 	}
 	
 	public double getProbabitlity() {
@@ -126,7 +120,7 @@ public class Particle {
 	}
 
 	/**
-	 * 
+	 * Moves Particle into the direction it is looking
 	 * @param distance distance in centimeters, distance that the particle moves
 	 */
 	public void moveParticle(int distance) {
@@ -134,6 +128,10 @@ public class Particle {
 		setY(y + Math.sin(getAngle())*distance);
 		setX(x + Math.cos(getAngle())*distance);
 	}	
+	/**
+	 * Turns Particle into a given direction
+	 * @param theta angle the particle turns
+	 */
 	public void turnParticle(int theta) {
 		if((getAngle()+theta) < 0 ) {
 			setAngle(360 +(getAngle()+theta));
