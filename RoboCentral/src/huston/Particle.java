@@ -105,7 +105,7 @@ public class Particle {
 
 
 	/**
-	 * Moves every Particle into the direction it is looking
+	 * Moves Particle into the direction it is looking
 	 * @param distance distance in centimeters, distance that the particle moves
 	 */
 	public void moveParticle(int distance) {
@@ -114,8 +114,8 @@ public class Particle {
 		setX(x + Math.cos(getAngle())*distance);
 	}	
 	/**
-	 * Turns every Particle into a given direction
-	 * @param theta angle the particle shall move
+	 * Turns Particle into a given direction
+	 * @param theta angle the particle turns
 	 */
 	public void turnParticle(int theta) {
 		if((getAngle()+theta) < 0 ) {

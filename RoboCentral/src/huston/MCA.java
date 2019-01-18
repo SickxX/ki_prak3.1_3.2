@@ -111,12 +111,19 @@ public class MCA {
 //		System.out.println(Arrays.toString(neL.toArray()));
 		return neL;
 	}
-	
+	/**
+	 * calls the moveParticle method for every particle
+	 * @param distance  distance in centimeters, distance that the particles move
+	 */
 	public void moveParticles(int distance) {
 		for(Particle p : partMenge) {
 			p.moveParticle(distance);
 		}
 	}
+	/**
+	 * calls the turnParticle method for every particle
+	 * @param theta angle the particles turn
+	 */
 	public void turnParticles(int theta) {
 		for(Particle p : partMenge) {
 			p.turnParticle(theta);
