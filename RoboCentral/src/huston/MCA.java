@@ -46,6 +46,7 @@ public class MCA {
 		for(int i = 0; i < partMenge.size(); i++)
 		{
 			partMenge.get(i).draw(g,SCALE);
+			
 //			System.out.println(partMenge.get(i).getAngle());
 		}	
 		System.out.println("particles " + partMenge.size());
@@ -76,7 +77,7 @@ public class MCA {
 			angle = rand1.nextFloat()*360;
 
 			if(map.isInside((int)r1, (int)r2)) {
-				partMenge.add(new Particle(i, r1, r2,angle));
+				partMenge.add(new Particle(r1, r2,angle));
 				i++;					
 			}
 		}
@@ -107,7 +108,7 @@ public class MCA {
 				neL.add(partMenge.get(randomIndex));
 			}
 		}
-		System.out.println(Arrays.toString(neL.toArray()));
+//		System.out.println(Arrays.toString(neL.toArray()));
 		return neL;
 	}
 	
