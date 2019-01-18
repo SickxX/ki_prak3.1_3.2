@@ -8,10 +8,12 @@ import java.io.PrintWriter;
 
 public class RobotServer 
 {
+	
+	private static MapContainer mc;
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		MapContainer mp = new MapContainer();
+		mc = new MapContainer();
 		
 		//Conection
 //		RobotServer server = new RobotServer();
