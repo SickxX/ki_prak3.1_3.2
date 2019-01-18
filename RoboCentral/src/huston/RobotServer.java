@@ -191,9 +191,6 @@ public class RobotServer
 			if(d.getDistance() > bestValue.getDistance()) {
 				bestValue = d;
 			}
-			if(d.getDistance() == Float.POSITIVE_INFINITY) {
-				bestValue = d;
-			}
 		}
 		if ( bestValue.getDistance() < 15) {
 			try {
