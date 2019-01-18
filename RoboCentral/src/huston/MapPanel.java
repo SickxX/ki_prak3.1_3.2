@@ -17,6 +17,11 @@ public MCA mca;
 		mca.start();
 	}
 	
+	public MCA getMCA()
+	{
+		return mca;
+	}
+	
 	@Override
     public void paintComponent(Graphics g) 
 	{

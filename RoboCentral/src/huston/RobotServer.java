@@ -5,16 +5,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import huston.Sensor.SensorData;
 
 public class RobotServer 
 {
 	
-	private static MapContainer mc;
+	
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		mc = new MapContainer();
-		
+
+		MapContainer mp = new MapContainer();
+		mp.getMCA();
 		//Conection
 //		RobotServer server = new RobotServer();
 //		try {
@@ -56,7 +60,7 @@ public class RobotServer
 			
 	}
 	
-	public void call(java.net.Socket socket, String command) throws Exception
+	public String call(java.net.Socket socket, String command) throws Exception
 	{
 		write(socket, command);
 		String answer = read(socket);
@@ -73,6 +77,7 @@ public class RobotServer
 		{
 			System.out.println(answer);			
 		}
+		return answer;
 	}
 
 	public java.net.Socket waitForLogin(java.net.ServerSocket serverSocket) throws IOException
@@ -96,4 +101,36 @@ public class RobotServer
 		String msg = new String(buffer, 0, bSize);
 		return msg;
 	}
+	
+	public void measure(java.net.Socket client, int samplesize) throws Exception
+	{
+		ArrayList<SensorData> data = new ArrayList<>();
+		
+		double step = 0.0;
+		if(samplesize % 2 == 1) {
+			step = (double)(samplesize - 1) / 2;
+			call(client, "Look 0");
+			data.add(new SensorData(0, Float.parseFloat(call(client, "Distance"))));
+		} else {
+			step = (double)(samplesize / 2);
+		}
+		
+		int i = -90;
+		int j = 90;
+		int run = (int) step;
+		while(run > 0) {
+			call(client, "Look " + i);
+			data.add(new SensorData(i, Float.parseFloat(call(client, "Distance"))));
+			call(client, "Look " + j);
+			data.add(new SensorData(j, Float.parseFloat(call(client, "Distance"))));
+			i += 90 / run;
+			j -= 90 / run;
+			run -= 1;
+		}
+		
+		// TODO: MCA ausführen
+	}
+	
+	public void move(java.net.Socket client)
+	{}
 }
