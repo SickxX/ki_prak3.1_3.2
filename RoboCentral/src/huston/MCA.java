@@ -40,6 +40,11 @@ public class MCA {
 //		recalculateParticles();
 		
 	}
+	
+	public void doResampling()
+	{
+		partMenge = resample();
+	}
 
 	public void draw(Graphics g)
 	{

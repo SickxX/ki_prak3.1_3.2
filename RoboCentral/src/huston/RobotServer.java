@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import huston.Sensor.SensorData;
+import math.Utils;
 
 public class RobotServer 
 {
@@ -17,6 +18,8 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
+		
+		
 		server = new RobotServer();
 	}
 	
@@ -24,6 +27,10 @@ public class RobotServer
 	{
 		mc = new MapContainer();
 		mc.getMCA();
+		
+//		mc.getMCA().start();
+//		System.out.println("---------Startet MCA");
+//		delay(1000);
 		
 		//Conection
 		try {
@@ -36,7 +43,7 @@ public class RobotServer
 	public void connect() throws IOException 
 	{
 		System.out.println("Starting");
-		int port = 8083;
+		int port = 8084;
 		
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 		java.net.Socket client = waitForLogin(serverSocket);
@@ -58,13 +65,17 @@ public class RobotServer
 			
 			//1. Partikel erzeugen
 			mc.getMCA().start();
+			mc.repaint();
+			System.out.println("---------Startet MCA");
 			delay(1000);
 			//2. Measure
 			measure(client, 5);
+			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < 1; i++)
 			{
+				System.out.println("-----------Doing stuff");
 				if(Math.random() * 2 > 1)
 				{
 					move(client, 50);
@@ -78,6 +89,8 @@ public class RobotServer
 			}
 			//3. 
 			//3. 
+			call(client, "Kill");
+			System.out.println("KILLED");
 			
 		} catch(Exception e)	{
 			e.printStackTrace();
@@ -138,7 +151,7 @@ public class RobotServer
 		if(samplesize % 2 == 1) {
 			step = (double)(samplesize - 1) / 2;
 			call(client, "Look 0");
-			data.add(new SensorData(0, Float.parseFloat(call(client, "Distance"))));
+			data.add(new SensorData(0, Utils.parseFloat(call(client, "Distance"))));
 		} else {
 			step = (double)(samplesize / 2);
 		}
@@ -148,21 +161,27 @@ public class RobotServer
 		int run = (int) step;
 		while(run > 0) {
 			call(client, "Look " + i);
-			data.add(new SensorData(i, Float.parseFloat(call(client, "Distance"))));
+			data.add(new SensorData(i, Utils.parseFloat(call(client, "Distance"))));
 			call(client, "Look " + j);
-			data.add(new SensorData(j, Float.parseFloat(call(client, "Distance"))));
+			data.add(new SensorData(j, Utils.parseFloat(call(client, "Distance"))));
 			i += 90 / run;
 			j -= 90 / run;
 			run -= 1;
 		}
 		
 		mc.getMCA().recalculateParticles(data);
+		mc.repaint();
+		
+		jan();
+		
+		mc.getMCA().doResampling();
+		mc.repaint();
 	}
 	
 	public void move(java.net.Socket client, int distance) throws Exception
 	{
 		call(client, "Forward " + distance);
-		mc.getMCA().moveParticles(distance);
+		mc.getMCA().moveParticles(distance / 10);
 		measure(client, 3);
 	}
 	
@@ -180,5 +199,10 @@ public class RobotServer
 		}
 		catch(Exception e)
 		{}
+	}
+	
+	public void jan()
+	{
+		delay(1000);
 	}
 }

@@ -21,6 +21,13 @@ public MCA mca;
 		return mca;
 	}
 	
+	public void repaintAll()
+	{
+		this.repaint();
+		this.revalidate();
+		System.out.println("Repainted");
+	}
+	
 	@Override
     public void paintComponent(Graphics g) 
 	{

@@ -12,4 +12,14 @@ public class Utils
 		return ((2 * Math.PI) / 360.0) * grad;
 	}
 	
+	public static float parseFloat(String f)
+	{
+		try {
+			return Float.parseFloat(f);			
+		}
+		catch(Exception e)
+		{
+			return Float.MAX_VALUE;
+		}
+	}
 }

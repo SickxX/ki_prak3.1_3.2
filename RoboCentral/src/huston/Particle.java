@@ -73,13 +73,11 @@ public class Particle {
 	
 	public void draw(Graphics g, float scale)
 	{
-//		g.setColor(c);
+		
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
-//		g.setColor(new Color(1, 0, 0, (float)(1)));
+//		g.setColor(new Color(1f, 0f, 0f));
 		g.fillOval((int)getX(),(int) getY(), 3, 3);
-//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
-		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
-	}
+}
 
 	/**
 	 * Recalculates based on Scanned data
