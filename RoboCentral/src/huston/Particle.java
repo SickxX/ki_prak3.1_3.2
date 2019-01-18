@@ -11,11 +11,12 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 1;
 	
 	protected double id,x,y;
 	protected double angle;
 	private double probability;
+	private double error;
 
 	public Particle(double id, double x, double y) {
 		this.id = id;
@@ -61,6 +62,11 @@ public class Particle {
 	public void setY(double y) {
 		this.y = y;
 	}
+	public double getError()
+	{
+		return error;
+	}
+	
 	
 	public String toString()
 	{
@@ -86,7 +92,7 @@ public class Particle {
 	 */
 	public void recalculate(ArrayList<SensorData> data, Map map)
 	{
-		double error = 0;
+		error = 0;
 		
 		for(SensorData d: data)
 		{
@@ -97,16 +103,27 @@ public class Particle {
 			error += (Math.pow(distanceToClosest - d.getDistance(), 2));
 		}
 		
-		if(error != 0)
-			probability = 1 / error;
-		else 
-			probability = 1;
-		
-		if(probability > 1)
-			probability = 1;
+//		if(error != 0)
+//			probability = 1 / error;
+//		else 
+//			probability = 1;
+//		
+//		if(probability > 1)
+//			probability = 1;
 
 	}
+	
+	public void normalize(double maxError, double minError)
+	{
 
+		double prev = probability;
+		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
+	}
+
+	public void penalize()
+	{
+		probability = 0;
+	}
 
 	/**
 	 * 
