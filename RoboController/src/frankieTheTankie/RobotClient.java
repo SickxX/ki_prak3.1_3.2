@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 
 public class RobotClient
 {
-	private static final String IP = "10.0.1.45";
+	private static final String IP = "10.0.1.44";
 	public static void main(String[] args) throws Exception 
 	{	
 		RobotClient client = new RobotClient();
@@ -80,6 +80,10 @@ public class RobotClient
 					else if(command.equals("TurnRight"))
 					{
 						commandCenter.turnRight(value);
+					}
+					else if(command.equals("Turn"))
+					{
+						commandCenter.turn(value);
 					}
 					else if(command.equals("Look"))
 					{

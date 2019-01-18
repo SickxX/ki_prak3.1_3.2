@@ -11,18 +11,26 @@ import huston.Sensor.SensorData;
 
 public class RobotServer 
 {
+	private static RobotServer server;
+	private MapContainer mc;
+	
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		MapContainer mp = new MapContainer();
-		mp.getMCA();
+		server = new RobotServer();
+	}
+	
+	public RobotServer()
+	{
+		mc = new MapContainer();
+		mc.getMCA();
+		
 		//Conection
-//		RobotServer server = new RobotServer();
-//		try {
-//			server.connect();
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
+		try {
+		connect();
+	}catch(IOException e){
+		e.printStackTrace();
+	}
 	}
  
 	public void connect() throws IOException 
@@ -34,19 +42,42 @@ public class RobotServer
 		java.net.Socket client = waitForLogin(serverSocket);
 		System.out.println("Connected");
 		try{
-			call(client, "Sensors");
-			call(client, "Forward 500");
-			call(client, "Sensors");
-			call(client, "TurnLeft 90");
-			call(client, "TurnRight 270");
-			call(client, "Look 90");
-			call(client, "Look -180");
-			call(client, "Sensors");
-			call(client, "Forward 500");
-			call(client, "Sensors");
-			call(client, "TurnLeft 180");
-			call(client, "Sensors");
-			call(client, "Kill");
+//			call(client, "Sensors");
+//			call(client, "Forward 500");
+//			call(client, "Sensors");
+//			call(client, "TurnLeft 90");
+//			call(client, "TurnRight 270");
+//			call(client, "Look 90");
+//			call(client, "Look -180");
+//			call(client, "Sensors");
+//			call(client, "Forward 500");
+//			call(client, "Sensors");
+//			call(client, "TurnLeft 180");
+//			call(client, "Sensors");
+//			call(client, "Kill");
+			
+			//1. Partikel erzeugen
+			mc.getMCA().start();
+			delay(1000);
+			//2. Measure
+			measure(client, 5);
+			delay(1000);
+			//3. Action
+			for(int i = 0; i < 10; i++)
+			{
+				if(Math.random() * 2 > 1)
+				{
+					move(client, 50);
+					delay(1000);
+				}
+				else
+				{
+					turn(client, 45);
+					delay(1000);
+				}
+			}
+			//3. 
+			//3. 
 			
 		} catch(Exception e)	{
 			e.printStackTrace();
@@ -125,9 +156,29 @@ public class RobotServer
 			run -= 1;
 		}
 		
-		// TODO: MCA ausführen
+		mc.getMCA().recalculateParticles(data);
 	}
 	
-	public void move(java.net.Socket client)
-	{}
+	public void move(java.net.Socket client, int distance) throws Exception
+	{
+		call(client, "Forward " + distance);
+		mc.getMCA().moveParticles(distance);
+		measure(client, 3);
+	}
+	
+	public void turn(java.net.Socket client, int theta) throws Exception
+	{
+		call(client, "Turn " + theta);
+		mc.getMCA().turnParticles(theta);
+		measure(client, 3);
+	}
+	
+	public void delay(long delay)
+	{
+		try {
+			Thread.sleep(delay);
+		}
+		catch(Exception e)
+		{}
+	}
 }
