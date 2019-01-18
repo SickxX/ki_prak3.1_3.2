@@ -31,7 +31,7 @@ public class RobotServer
 		try {
 			connect();
 		}catch(IOException e){
-			e.printStackTrace();
+			e.printStackTrace(); 
 		}
 	}
 
@@ -166,7 +166,7 @@ public class RobotServer
 	public void move(java.net.Socket client, int distance) throws Exception
 	{
 		call(client, "Forward " + distance);
-		mc.getMCA().moveParticles(distance);
+		mc.getMCA().moveParticles(distance/10);
 		measure(client, 3);
 	}
 
