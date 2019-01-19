@@ -7,8 +7,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import huston.Sensor.SensorData;
+import huston.Robot.SensorData;
 import math.Utils;
+import test.RobotTest;
 
 public class RobotServer 
 {
@@ -19,9 +20,19 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer();
+		server = new RobotServer(true);
 	}
 
+	public RobotServer(boolean t)
+	{
+		mc = new MapContainer();
+		mc.getMCA();
+		
+		RobotTest test = new RobotTest(mc.getMCA(), mc);
+		test.testPerformance();
+
+	}
+	
 	public RobotServer()
 	{
 		mc = new MapContainer();
@@ -34,7 +45,7 @@ public class RobotServer
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void connect() throws IOException 
 	{
 		System.out.println("Starting");

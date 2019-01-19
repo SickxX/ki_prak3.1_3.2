@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import huston.Sensor.SensorData;
+import huston.Robot.SensorData;
 
 
 public class MCA {
@@ -72,7 +72,7 @@ public class MCA {
 
 		int i = 0;
 			
-		addParticle(new Particle(25, 75, 90));
+		addParticle(new Particle(25, 75, 0));
 		// --- Fill with random Particles
 		while( i < p ) {
 			//r1 zufallswert für die xAchse

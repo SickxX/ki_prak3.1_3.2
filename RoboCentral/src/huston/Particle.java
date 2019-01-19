@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import huston.Sensor.SensorData;
+import huston.Robot.SensorData;
 import math.Straight;
 import math.Utils;
 import math.Vector;

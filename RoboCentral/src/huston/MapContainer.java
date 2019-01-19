@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 public class MapContainer {
 	private MapBuild mb;
 	private Map map;
-
+	private JFrame frame;
 	private MapPanel mp;
 	public MapContainer()
 	{
@@ -25,13 +25,15 @@ public class MapContainer {
 	
 	public void repaint()
 	{
+		frame.repaint();
+		frame.revalidate();
 		mp.repaintAll();
 	}
 	
 	public void start()
 	{
-		JFrame frame = new JFrame("Graph");
-
+		frame = new JFrame("Graph");
+		
 		frame.add(mp);
 
 		frame.setSize(650, 200);
