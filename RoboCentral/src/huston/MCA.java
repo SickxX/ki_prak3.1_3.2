@@ -36,12 +36,6 @@ public class MCA {
 		
 	}
 	
-	public void doResampling()
-	{
-		
-		partMenge = resample();
-		System.out.println("Done resampling");
-	}
 
 	public void draw(Graphics g)
 	{
@@ -104,19 +98,31 @@ public class MCA {
 		
 	}
 	
+
 	public ArrayList<Particle> resample()
 	{
 		ArrayList<Particle> neL = new ArrayList<Particle>();
 		// --- Resampling
-		while(neL.size() < partMenge.size()) {
+		System.out.println("partMenge.Size: " + partMenge.size());
+		while(neL.size() < partMenge.size()) 
+		{
 			int randomIndex = rand1.nextInt(partMenge.size());
-			if ( 1- partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) {
+			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
+			{
 				Particle p = partMenge.get(randomIndex);
 				neL.add(new Particle(p.getX(), p.getY(), p.getAngle(), p.getProbabitlity()));
 			}
 		}
 		return neL;
 	}
+	
+	public void doResampling()
+	{
+		
+		partMenge = resample();
+		System.out.println("Done resampling");
+	}
+
 	/**
 	 * calls the moveParticle method for every particle
 	 * @param distance  distance in centimeters, distance that the particles move

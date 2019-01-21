@@ -23,24 +23,28 @@ public class RobotTest
 	public void testPerformance()
 	{
 		testenSIE();
+		jan();
 		// --- Testing a robot starting in the left corner, measuring facing up
 		// --- Note: Test with kicking out INFINITY!
 		ArrayList<SensorData> mock = new ArrayList<>();
 		
+		System.out.println("!!!first measuring!!!");
 		//Messung 1
 		mock.add(new SensorData(0, 575));
 		mock.add(new SensorData(-90, 25));
 		mock.add(new SensorData(90, 25));
 		
+		System.out.println("before recalculateParticles");
 		mca.recalculateParticles(mock);
+		System.out.println("before Resampling");
 		mca.doResampling();
+		System.out.println("after RESAMPLING");
 		mc.repaint();
-		moveTest();
-
-		mc.repaint();
-
-		//Messung 2
 		jan();
+		moveTest();
+		jan();
+		System.out.println("!!!second measuring!!!");
+		//Messung 2
 		mock.clear();
 		mock.add(new SensorData(0, 525));
 		mock.add(new SensorData(-90, 25));
@@ -48,10 +52,56 @@ public class RobotTest
 		
 		mca.recalculateParticles(mock);
 		mca.doResampling();
+		mc.repaint();
+		jan();
+		moveTest();
+		jan();
+//		System.out.println("new generation???");
+//		mca.generateParticles(1000);
+//		mc.repaint();
+		System.out.println("!!!third measuring!!!");
+		//Messung 3
+		mock.clear();
+		mock.add(new SensorData(0, 475));
+		mock.add(new SensorData(-90, 75));
+		mock.add(new SensorData(90, 25));
 		
+		mca.recalculateParticles(mock);
+		mca.doResampling();
+		mc.repaint();
+		jan();
+		moveTest();
+		jan();
+		System.out.println("!!!fourth measuring!!!");
+		//Messung 4
+		mock.clear();
+		mock.add(new SensorData(0, 425));
+		mock.add(new SensorData(-90, 25));
+		mock.add(new SensorData(90, 25));
+		
+		mca.recalculateParticles(mock);
+		mca.doResampling();
+		mc.repaint();
+		jan();
+		moveTest();
+		jan();
+
+		System.out.println("!!!fifth measuring!!!");
+		//Messung 5
+		mock.clear();
+		mock.add(new SensorData(0, 375));
+		mock.add(new SensorData(-90, 75));
+		mock.add(new SensorData(90, 75));
+		
+		System.out.println("recalc");
+		mca.recalculateParticles(mock);
+		System.out.println("then resample");
+		mca.doResampling();
+		System.out.println("then repaint");
 		mc.repaint();
 		
-		System.out.println("DONE TESTING");
+		
+		System.out.println("||||||||||||DONE TESTING||||||||||||||||");
 		
 	}
 	
@@ -60,29 +110,23 @@ public class RobotTest
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 	
 	public void moveTest() 
 	{
-		jan();
 		mca.moveParticles(50);
 		mc.repaint();
-		jan();
 		System.out.println(Arrays.toString(mca.getParticle().toArray()));
-//		mca.moveParticles(50);
-//		jan();
-//		mca.moveParticles(50);
-		
 	}
 	
 	public void testenSIE() 
 	{
 		System.out.println("TESTEN SIE TESTENSIE!!!!");
 		mca.start();
-		mca.addParticle(new Particle(25, 75, 90));
+		//mca.addParticle(new Particle(25, 75, 90));
 		mc.repaint();
 	}
 	
