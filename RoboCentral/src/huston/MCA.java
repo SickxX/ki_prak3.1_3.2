@@ -67,7 +67,6 @@ public class MCA {
 			r1 = rand1.nextDouble()*600;
 			r2 = rand1.nextDouble()*150;
 			angle = rand1.nextFloat()*360;
-
 			if(map.isInside((int)r1, (int)r2)) {
 				partMenge.add(new Particle(r1, r2,angle));
 				i++;					
@@ -89,6 +88,7 @@ public class MCA {
 		
 		for(Particle part : partMenge)
 		{
+			
 			part.normalize(maxError, minError);
 				if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
 				{
@@ -97,7 +97,7 @@ public class MCA {
 		}
 		
 	}
-	
+
 
 	public ArrayList<Particle> resample()
 	{
