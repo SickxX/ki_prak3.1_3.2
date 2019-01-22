@@ -41,7 +41,7 @@ public class RobotTest
 		System.out.println("after RESAMPLING");
 		mc.repaint();
 		jan();
-		moveTest(50);
+		moveTest();
 		jan();
 		System.out.println("!!!second measuring!!!");
 		//Messung 2
@@ -54,7 +54,7 @@ public class RobotTest
 		mca.doResampling();
 		mc.repaint();
 		jan();
-		moveTest(50);
+		moveTest();
 		jan();
 
 		System.out.println("!!!third measuring!!!");
@@ -68,7 +68,7 @@ public class RobotTest
 		mca.doResampling();
 		mc.repaint();
 		jan();
-		moveTest(50);
+		moveTest();
 		jan();
 		System.out.println("!!!fourth measuring!!!");
 		//Messung 4
@@ -81,7 +81,7 @@ public class RobotTest
 		mca.doResampling();
 		mc.repaint();
 		jan();
-		moveTest(50);
+		moveTest();
 		jan();
 
 		System.out.println("!!!fifth measuring!!!");
@@ -95,7 +95,7 @@ public class RobotTest
 		mca.doResampling();
 		mc.repaint();
 		jan();
-		moveTest(100);
+		moveTest();
 		jan();
 		
 		
@@ -241,9 +241,9 @@ public class RobotTest
 		mca.turnParticles(theta);
 		mc.repaint();
 	}
-	public void moveTest(int distance) 
+	public void moveTest() 
 	{
-		mca.moveParticles(distance);
+		mca.moveParticles(50);
 		mc.repaint();
 		//System.out.println(Arrays.toString(mca.getParticle().toArray()));
 	}
