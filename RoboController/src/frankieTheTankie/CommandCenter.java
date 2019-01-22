@@ -52,6 +52,9 @@ public class CommandCenter
 		colorSample = new float[colorProvider.sampleSize()];
 	}
 
+	
+	
+	
 	public String colorScan() 
 	{
 		System.out.println("Scanning...");
@@ -74,11 +77,14 @@ public class CommandCenter
 		return "Distance: " + distanceValue *100;
 
 	}
-	
+	/**
+	 * - oder nicht - je nach gruppe
+	 * @param distance
+	 */
 	public void forward(int distance) 
 	{
 		distance *= .95;
-		movePilot.travel(distance);
+		movePilot.travel(-distance);
 		stop();
 	}
 	
