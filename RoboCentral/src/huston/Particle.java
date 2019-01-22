@@ -4,39 +4,36 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import huston.Sensor.SensorData;
+import huston.Robot.SensorData;
 import math.Straight;
 import math.Utils;
 import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 5000;
 	
 	protected double x,y;
 	protected double angle;
 	private double probability;
+	private double error;
 
 	public Particle(double x, double y) {
 		this.x = x;
 		this.y = y;
 		probability = 1;
 	}
-	public Particle(double x, double y, double propability) {
+	public Particle(double x, double y, double angle) {
 		this(x,y);
-		this.probability = propability;
-	}
-
-	//	public Particle(double id, double x, double y, double[] dir) {
-	//		this.id = id;
-	//		this.x = x;
-	//		this.y = y;
-	//		this.dir = dir;
-	//	}
-	public Particle(double x, double y, float angle) {
-		this(x, y);
 		this.angle = angle;
 	}
+
+	public Particle(double x, double y, double angle, double prob) {
+		this(x, y);
+		this.angle = angle;
+		this.probability = prob;
+	}
+	
 	public double getAngle() {
 		return angle;
 	}
@@ -55,10 +52,15 @@ public class Particle {
 	public void setY(double y) {
 		this.y = y;
 	}
+	public double getError()
+	{
+		return error;
+	}
+	
 	
 	public String toString()
 	{
-		return "Partikel: " + ", x:" + x + ", y" + y + ", probability:" + probability; 
+		return "Partikel: " + "x:" + x + ", y:" + y + ", Angel: " + angle + ", probability:" + probability; 
 	}
 	
 	public double getProbabitlity() {
@@ -66,14 +68,17 @@ public class Particle {
 	}
 	
 	public void draw(Graphics g, float scale)
-	{
-//		g.setColor(c);
+	{	
+		//RED
+		if (probability > 0.7 && probability <= 1 )	 
+		{
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
-//		g.setColor(new Color(1, 0, 0, (float)(1)));
-		g.fillOval((int)getX(),(int) getY(), 3, 3);
-//		g.drawLine(from.getX() + Vertex.SIZE/2, from.getY() + Vertex.SIZE/2, to.getX() + Vertex.SIZE/2, to.getY() + Vertex.SIZE/2);
-		//g.drawLine((int) ((from.getX() + Vertex.SIZE/2) * scale), from.getY() + (int) ((from.getX() + Vertex.SIZE/2 * scale)), (int) ((to.getX() + Vertex.SIZE/2) * scale), (int) ((to.getY() + Vertex.SIZE/2) * scale));
-	}
+		g.fillOval((int)getX(),(int) getY(), 4, 4);
+		}//BLUE
+		else
+			g.setColor(new Color(0, 0, 1, (float)(probability)));
+			g.fillOval((int)getX(),(int) getY(), 4, 4);
+}
 
 	/**
 	 * Recalculates based on Scanned data
@@ -82,8 +87,8 @@ public class Particle {
 	 */
 	public void recalculate(ArrayList<SensorData> data, Map map)
 	{
-		double error = 0;
-		
+		error = 0;
+//		System.out.println(this);
 		for(SensorData d: data)
 		{
 			Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle + d.getRotation())));	
@@ -91,18 +96,29 @@ public class Particle {
 			
 			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
 			error += (Math.pow(distanceToClosest - d.getDistance(), 2));
+//			System.out.println("CLOSEST " + closest);
 		}
 		
-		if(error != 0)
-			probability = 1 / error;
-		else 
-			probability = 1;
-		
-		if(probability > 1)
-			probability = 1;
 
 	}
+	
+	public void normalize(double maxError, double minError)
+	{
 
+		double prev = probability;
+		
+		if (error < 1 )
+			probability = 1;
+		else
+			probability = prev * 1/error;
+//		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
+		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
+	}
+
+	public void penalize()
+	{
+		probability = 0;
+	}
 
 	/**
 	 * Moves Particle into the direction it is looking
@@ -110,9 +126,12 @@ public class Particle {
 	 */
 	public void moveParticle(int distance) {
 
-		setY(y + Math.sin(getAngle())*distance);
-		setX(x + Math.cos(getAngle())*distance);
-	}	
+		setY(y - Math.cos(Utils.converteToRad(getAngle()))*distance);
+		setX(x + Math.sin(Utils.converteToRad(getAngle()))*distance);
+	}
+	
+	//TODO
+	// RAD statt GRAD!!
 	/**
 	 * Turns Particle into a given direction
 	 * @param theta angle the particle turns

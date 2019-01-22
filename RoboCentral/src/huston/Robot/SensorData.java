@@ -1,4 +1,4 @@
-package huston.Sensor;
+package huston.Robot;
 
 public class SensorData 
 {
