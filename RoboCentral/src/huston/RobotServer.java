@@ -163,8 +163,8 @@ public class RobotServer
 			call(client, "Look 0");
 			String c = call(client, "Distance");
 			String[] cData = c.split(" ");
-			
-			data.add(new SensorData(0, Utils.parseFloat(cData[1])));
+//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+				data.add(new SensorData(0, Utils.parseFloat(cData[1])));				
 		} else {
 			step = (double)(samplesize / 2);
 		}
@@ -177,11 +177,17 @@ public class RobotServer
 			
 			String c = call(client, "Distance");
 			String[] cData = c.split(" ");
-			data.add(new SensorData(i, Utils.parseFloat(cData[1])));
+			
+			//um INFINITY auszuschlieﬂen eine If anweisung schreiben und die Messdaten einfach nicht verwenden
+			// sollte das nicht aufgrund unserer implementierung der SensorData auch funktionieren, wenn wir 
+			// keine Daten haben?
+//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+				data.add(new SensorData(i, Utils.parseFloat(cData[1])));				
 			call(client, "Look " + j);
 			c = call(client, "Distance");
 			cData = c.split(" ");
-			data.add(new SensorData(j, Utils.parseFloat(cData[1])));
+//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+				data.add(new SensorData(j, Utils.parseFloat(cData[1])));				
 			i += 90 / run;
 			j -= 90 / run;
 			run -= 1;
