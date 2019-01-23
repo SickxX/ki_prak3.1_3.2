@@ -106,10 +106,14 @@ public class MCA {
 		while(neL.size() < partMenge.size()) 
 		{
 			int randomIndex = rand1.nextInt(partMenge.size());
-			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
+			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble() &&  partMenge.get(randomIndex).getProbabitlity() > 0.98) 
 			{
 				Particle p = partMenge.get(randomIndex);
 				neL.add(new Particle(p.getX(), p.getY(), p.getAngle(), p.getProbabitlity()));
+				neL.add(new Particle(p.getX() + 1, p.getY() + 1, p.getAngle(), p.getProbabitlity()));
+				neL.add(new Particle(p.getX() - 1, p.getY() - 1, p.getAngle(), p.getProbabitlity()));
+				neL.add(new Particle(p.getX() + 1, p.getY() - 1, p.getAngle(), p.getProbabitlity()));
+				neL.add(new Particle(p.getX() - 1, p.getY() + 1, p.getAngle(), p.getProbabitlity()));
 			}
 		}
 		return neL;

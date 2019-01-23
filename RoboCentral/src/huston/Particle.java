@@ -12,7 +12,7 @@ import math.Vector;
 public class Particle {
 
 
-	public static final int TOTAL_PARTICLES = 50000;
+	public static final int TOTAL_PARTICLES = 200000;
 	
 	protected double x,y;
 	protected double angle;
@@ -71,7 +71,7 @@ public class Particle {
 	public void draw(Graphics g, float scale)
 	{	
 		//RED
-		if (probability > 0.95 && probability <= 1 )	 
+		if (probability > 0.99 && probability <= 1 )	 
 		{
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
 		g.fillOval((int)getX(),(int) getY(), 4, 4);

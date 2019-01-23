@@ -56,7 +56,7 @@ public class RobotServer
 	{
 		System.out.println("Starting");
 
-		int port = 8085;
+		int port = 8080;
 
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 		System.out.println("Waiting...");

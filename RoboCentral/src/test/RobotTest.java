@@ -211,7 +211,12 @@ public class RobotTest
 		mock.add(new SensorData(90, 125));
 		mock.add(new SensorData(-90, 475));
 		
-		
+		mca.recalculateParticles(mock);
+		mca.doResampling();
+		mc.repaint();
+	
+		mca.doResampling();
+		mc.repaint();
 		System.out.println("||||||||||||DONE TESTING||||||||||||||||");
 		
 	}
