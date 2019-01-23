@@ -14,7 +14,7 @@ public class Particle {
 
 	public static final int TOTAL_PARTICLES = 1;
 	public static final Random random = new Random();
-	
+
 	protected double x,y;
 	protected double angle;
 	private double probability;
@@ -70,8 +70,7 @@ public class Particle {
 	}
 	
 	public void draw(Graphics g, float scale)
-	{	
-		//RED
+	{		//RED
 //		new Color(new ColorSpace(ColorSpace.TYPE_HSV, 1), new float[] {(float)probability, 1f, 1f}, 1);
 		
 		if (probability > 0.80 && probability <= 1 )	 
@@ -138,12 +137,12 @@ public class Particle {
 		
 		double prev = probability;
 		
-//		
 		if (error < 1 )
 			probability = 1;
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
+
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
 	}
 	public void penalize()
@@ -168,8 +167,7 @@ public class Particle {
 	 * @param theta angle the particle turns
 	 */
 	public void turnParticle(int theta) {
-				
 			setAngle((getAngle()+theta) % 360);			
-		
+
 	}
 }

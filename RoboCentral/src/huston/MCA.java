@@ -19,30 +19,28 @@ public class MCA {
 	private float angle;
 	private Random rand1 = new Random();
 	private Map map;
-	
+
 	public MCA(Map map)
 	{
 		this.map = map;
 	}
 
-
 	public ArrayList<Particle> getParticle(){
 		return partMenge;
 	}
-	
+
 	public void start()
 	{
-		generateParticles(Particle.TOTAL_PARTICLES);
-		
+		generateParticles(Particle.TOTAL_PARTICLES);		
 	}
-	
+
 
 	public void draw(Graphics g)
 	{
 		for(int i = 0; i < partMenge.size(); i++)
-		{
+		{ 
 			partMenge.get(i).draw(g,SCALE);
-			
+
 		}	
 
 	}
@@ -58,7 +56,7 @@ public class MCA {
 		partMenge.clear();
 
 		int i = 0;
-			
+
 
 		// --- Fill with random Particles
 		while( i < p ) {
@@ -73,7 +71,7 @@ public class MCA {
 			}
 		}
 	}
-	
+
 	public void recalculateParticles(ArrayList<SensorData> data)
 	{
 
@@ -85,18 +83,18 @@ public class MCA {
 			if(part.getError() > maxError) maxError = part.getError();
 			if(part.getError() < minError) minError = part.getError();
 		}
-		
+
 		for(Particle part : partMenge)
 		{
 			
 			part.normalize(maxError, minError);
-				if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
-				{
-					part.penalize();
-				}
-				System.out.println(part.getProbabitlity());
+			
+			if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
+			{
+				part.penalize();
+			}
 		}
-		
+
 	}
 
 	public ArrayList<Particle> resample()
@@ -107,11 +105,8 @@ public class MCA {
 		while(newList.size() < partMenge.size()) 
 		{
 			int randomIndex = rand1.nextInt(partMenge.size());
-			if(partMenge.get(randomIndex).getProbabitlity() < 0.90)
-			{
-				continue;
-			}
-			if (1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
+
+			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble() &&  partMenge.get(randomIndex).getProbabitlity() > 0.98) 
 			{
 				Particle p = partMenge.get(randomIndex);
 				newList.addAll(p.mutate(3));
@@ -119,10 +114,10 @@ public class MCA {
 		}
 		return newList;
 	}
-	
+
 	public void doResampling()
 	{
-		
+
 		partMenge = resample();
 		System.out.println("Done resampling");
 	}

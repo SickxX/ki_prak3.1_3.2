@@ -107,6 +107,21 @@ public class RobotTest
 		mock.add(new SensorData(-90, 75));
 		mock.add(new SensorData(90, 75));
 		
+		mca.recalculateParticles(mock);
+		mca.doResampling();
+		mc.repaint();
+		jan();
+		moveTest();
+		jan();
+		
+		
+		System.out.println("!!!sixth measuring!!!");
+		//Messung 6
+		mock.clear();
+		mock.add(new SensorData(0, 325));
+		mock.add(new SensorData(90, 25));
+		mock.add(new SensorData(-90, 75));
+		
 		System.out.println("recalc");
 		mca.recalculateParticles(mock);
 		System.out.println("then resample");
@@ -117,26 +132,14 @@ public class RobotTest
 		moveTest();
 		jan();
 		
-		System.out.println("!!!Sixth measuring!!!");
-		//Messung 6
-		mock.clear();
-		mock.add(new SensorData(0, 325));
-		mock.add(new SensorData(90, 75));
-		mock.add(new SensorData(-90, 25));
-		
-		mca.recalculateParticles(mock);
-		mca.doResampling();
-		mc.repaint();
-		jan();
-		moveTest();
-		jan();
+	
 		
 		System.out.println("!!!Seventh measuring!!!");
 		//Messung 7
 		mock.clear();
 		mock.add(new SensorData(0, 275));
-		mock.add(new SensorData(90, 25));
-		mock.add(new SensorData(-90, 75));
+		mock.add(new SensorData(-90, 25));
+		mock.add(new SensorData(90, 75));
 		
 		mca.recalculateParticles(mock);
 		mca.doResampling();
@@ -224,7 +227,12 @@ public class RobotTest
 		mock.add(new SensorData(-90, 125));
 		mock.add(new SensorData(90, 475));
 		
-		
+		mca.recalculateParticles(mock);
+		mca.doResampling();
+		mc.repaint();
+	
+		mca.doResampling();
+		mc.repaint();
 		System.out.println("||||||||||||DONE TESTING||||||||||||||||");
 		
 	}
@@ -238,7 +246,10 @@ public class RobotTest
 			e.printStackTrace();
 		}
 	}
-	
+	public void turnTest(int theta) {
+		mca.turnParticles(theta);
+		mc.repaint();
+	}
 	public void moveTest() 
 	{
 		mca.moveParticles(50);
