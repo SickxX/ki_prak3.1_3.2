@@ -106,7 +106,7 @@ public class MCA {
 		{
 			int randomIndex = rand1.nextInt(partMenge.size());
 
-			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble() &&  partMenge.get(randomIndex).getProbabitlity() > 0.98) 
+			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
 			{
 				Particle p = partMenge.get(randomIndex);
 				newList.addAll(p.mutate(3));

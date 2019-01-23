@@ -12,7 +12,7 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 1;
+	public static final int TOTAL_PARTICLES = 10000;
 	public static final Random random = new Random();
 
 	protected double x,y;
@@ -128,7 +128,7 @@ public class Particle {
 	
 	private double generateNewValue(double val, int scale)
 	{
-		return (scale / 10) * (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
+		return (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
 	}
 	
 	public void normalize(double maxError, double minError)
@@ -137,10 +137,12 @@ public class Particle {
 		
 		double prev = probability;
 		
-		if (error < 1 )
+		if (error == 0 )
 			probability = 1;
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
+		
+		probability = Utils.activationFunction(probability);
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
 
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
