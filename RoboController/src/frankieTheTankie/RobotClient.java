@@ -18,8 +18,10 @@ import java.io.PrintWriter;
 
 public class RobotClient
 {
+
 	// 192.168.137.1 ////10.0.1.16
 	private static final String IP = "192.168.137.1";
+
 	public static void main(String[] args) throws Exception 
 	{	
 		RobotClient client = new RobotClient();

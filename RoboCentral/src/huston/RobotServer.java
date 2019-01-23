@@ -40,7 +40,6 @@ public class RobotServer
 	public RobotServer()
 	{
 		mc = new MapContainer();
-		mc.getMCA();
 
 		//Conection
 		try {
@@ -57,57 +56,55 @@ public class RobotServer
 	{
 		System.out.println("Starting");
 
+
 		int port = 8081;
 
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
+		
 		System.out.println("Waiting...");
 		java.net.Socket client = waitForLogin(serverSocket);
 		System.out.println("Connected");
 		try{
-			//			call(client, "Sensors");
-			//			call(client, "Forward 500");
-			//			call(client, "Sensors");
-			//			call(client, "TurnLeft 90");
-			//			call(client, "TurnRight 270");
-			//			call(client, "Look 90");
-			//			call(client, "Look -180");
-			//			call(client, "Sensors");
-			//			call(client, "Forward 500");
-			//			call(client, "Sensors");
-			//			call(client, "TurnLeft 180");
-			//			call(client, "Sensors");
-			//			call(client, "Kill");
+			
 
 			//1. Partikel erzeugen
 			mc.getMCA().start();
+			mc.getMCA().addParticle(new Particle(25, 75, 90));
 			mc.repaint();
 			System.out.println("---------Startet MCA");
 			delay(1000);
 			//2. Measure
-			//			measure(client, 3);
+			mc.getMCA().recalculateParticles(measure(client, 5));
+			mc.repaint();
+			mc.getMCA().doResampling();
+			mc.repaint();
+			move(client, 500);
+			move(client, 500);
+			move(client, 500);
+			move(client, 500);
+			
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-			int minMovementDistance = 30;
-			ArrayList<SensorData> shit;
-			for(int i = 0; i < 20 ; i++) 
-			{
-				shit = measure(client,5);
-				if(shit.get(0).getDistance() > minMovementDistance) {
-					doResample(shit);
-					move(client,minMovementDistance * 10);
-				} else 
-				{
-					if(coinFlip()) {
-						turn(client,ThreadLocalRandom.current().nextInt(20, 181));
-					} else {
-						turn(client, ThreadLocalRandom.current().nextInt(20, 181) * -1);
-					}
-				}
-
-
-
-			}
+//			int minMovementDistance = 30;
+//			ArrayList<SensorData> data;
+//			for(int i = 0; i < 20 ; i++) 
+//			{
+//				data = measure(client,5);
+//				if(data.get(0).getDistance() > minMovementDistance) {
+//					doResample(data);
+//					move(client,minMovementDistance * 10);
+//				} else 
+//				{
+//					double maxDist = 0;
+					
+//					
+//					
+//				}
+//
+//
+//
+//			}
 			//3. 
 			//3. 
 			call(client, "Kill");
@@ -121,6 +118,14 @@ public class RobotServer
 		}
 
 	}
+	
+	private void movement() {
+		
+	}
+	
+	
+	
+	
 
 	private void doResample(ArrayList<SensorData> data) {
 		mc.getMCA().recalculateParticles(data);
@@ -229,14 +234,18 @@ public class RobotServer
 	{
 		call(client, "Forward " + distance);
 		mc.getMCA().moveParticles(distance / 10);
-		//measure(client, 3);
+		mc.getMCA().recalculateParticles(measure(client, 5));
+		mc.repaint();
+		mc.getMCA().doResampling();
+		mc.repaint();
+		jan();
 	}
 
 	public void turn(java.net.Socket client, int theta) throws Exception
 	{
 		call(client, "Turn " + theta);
 		mc.getMCA().turnParticles(theta);
-		//measure(client, 3);
+		measure(client, 3);
 	}
 
 	public void delay(long delay)
