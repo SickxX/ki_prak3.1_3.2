@@ -17,5 +17,9 @@ public ArrayList<Particle> mutate(int numberOfOffspring)
 		return result;
 	}
 
+  private double generateNewValue(double val, int scale)
+	{
+		return (scale / 10) * (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
+	}
 
   newList.addAll(p.mutate(3));
