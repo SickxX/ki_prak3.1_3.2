@@ -83,20 +83,24 @@ public class RobotServer
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-			for(int i = 0; i < 10; i++)
-			{
-				System.out.println("-----------Doing stuff");
-				if(true || Math.random() * 2 > 1)
-				{
-					move(client, 500);
-					delay(1000);
-				}
-				else
-				{
-					turn(client, 45);
-					delay(1000);
-				}
-			}
+			move(client, 50);
+			measure(client,3);
+			move(client, 50);
+			measure(client,3);
+//			for(int i = 0; i < 10; i++)
+//			{
+//				System.out.println("-----------Doing stuff");
+//				if(true || Math.random() * 2 > 1)
+//				{
+//					move(client, 500);
+//					delay(1000);
+//				}
+//				else
+//				{
+//					turn(client, 45);
+//					delay(1000);
+//				}
+//			}
 			//3. 
 			//3. 
 			call(client, "Kill");
