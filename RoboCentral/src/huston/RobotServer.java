@@ -31,7 +31,7 @@ public class RobotServer
 
 		RobotTest test = new RobotTest(mc.getMCA(), mc);
 
-		test.test1();
+		test.testPerformance();
 //		test.testenSIE();
 
 
