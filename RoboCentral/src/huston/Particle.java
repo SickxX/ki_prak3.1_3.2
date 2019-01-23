@@ -57,8 +57,7 @@ public class Particle {
 	public double getError()
 	{
 		return error;
-	}
-	
+	}	
 	
 	public String toString()
 	{
@@ -96,7 +95,7 @@ public class Particle {
 		error = 0;
 //		System.out.println(this);
 		for(SensorData d: data)
-		{
+		{ 
 			Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle + d.getRotation())));	
 			Vector closest =  map.closestIntersection(view);
 			

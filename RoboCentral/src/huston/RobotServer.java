@@ -21,7 +21,7 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer(true);
+		server = new RobotServer();
 	}
 
 	public RobotServer(boolean t)
@@ -57,7 +57,7 @@ public class RobotServer
 	{
 		System.out.println("Starting");
 
-		int port = 8080;
+		int port = 8081;
 
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 		System.out.println("Waiting...");
