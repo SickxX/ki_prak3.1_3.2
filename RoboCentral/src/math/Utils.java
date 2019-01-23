@@ -21,7 +21,7 @@ public class Utils
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			return Float.MAX_VALUE;
+			return 0;
 		}
 	}
 }

@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 
 public class RobotClient
 {
-	private static final String IP = "10.0.1.22";
+	private static final String IP = "10.0.1.9";
 	public static void main(String[] args) throws Exception 
 	{	
 		RobotClient client = new RobotClient();
@@ -32,12 +32,15 @@ public class RobotClient
 		}	
 	}
  
+	
+	
+	
 	public void connect() throws IOException
 	{		
 		System.out.println("Init");
 		CommandCenter commandCenter = new CommandCenter();
 		
-		int port = 8084;
+		int port = 8085;
 		java.net.Socket socket = new java.net.Socket(IP, port);
 		System.out.println("Connected!");
 

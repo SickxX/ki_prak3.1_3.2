@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import huston.Robot.SensorData;
 import math.Utils;
@@ -20,7 +21,7 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer(true);
+		server = new RobotServer();
 	}
 
 	public RobotServer(boolean t)
@@ -48,11 +49,14 @@ public class RobotServer
 		}
 	}
 	
+	
+	
+	
 	public void connect() throws IOException 
 	{
 		System.out.println("Starting");
 
-		int port = 8084;
+		int port = 8085;
 		
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 		System.out.println("Waiting...");
@@ -79,28 +83,30 @@ public class RobotServer
 			System.out.println("---------Startet MCA");
 			delay(1000);
 			//2. Measure
-			measure(client, 3);
+//			measure(client, 3);
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-			move(client, 50);
-			measure(client,3);
-			move(client, 50);
-			measure(client,3);
-//			for(int i = 0; i < 10; i++)
-//			{
-//				System.out.println("-----------Doing stuff");
-//				if(true || Math.random() * 2 > 1)
-//				{
-//					move(client, 500);
-//					delay(1000);
-//				}
-//				else
-//				{
-//					turn(client, 45);
-//					delay(1000);
-//				}
-//			}
+			int minMovementDistance = 30;
+			ArrayList<SensorData> shit;
+			for(int i = 0; i < 20 ; i++) 
+			 {
+				shit = measure(client,5);
+				if(shit.get(0).getDistance() > minMovementDistance) {
+					doResample(shit);
+					move(client,minMovementDistance * 10);
+				} else 
+				{
+					if(coinFlip()) {
+						turn(client,ThreadLocalRandom.current().nextInt(20, 181));
+					} else {
+						turn(client, ThreadLocalRandom.current().nextInt(20, 181) * -1);
+					}
+				}
+				
+			
+				
+			}
 			//3. 
 			//3. 
 			call(client, "Kill");
@@ -114,6 +120,22 @@ public class RobotServer
 		}
 
 	}
+	
+	private void doResample(ArrayList<SensorData> data) {
+		mc.getMCA().recalculateParticles(data);
+		mc.repaint();
+		
+		jan();
+		
+		mc.getMCA().doResampling();
+		mc.repaint();
+	}
+	
+	private boolean coinFlip() {
+		return ThreadLocalRandom.current().nextDouble() > 0.5;
+	}
+	
+	
 
 	public String call(java.net.Socket socket, String command) throws Exception
 	{
@@ -157,7 +179,7 @@ public class RobotServer
 		return msg;
 	}
 
-	public void measure(java.net.Socket client, int samplesize) throws Exception
+	public ArrayList<SensorData> measure(java.net.Socket client, int samplesize) throws Exception
 	{
 		ArrayList<SensorData> data = new ArrayList<>();
 
@@ -197,13 +219,7 @@ public class RobotServer
 			run -= 1;
 		}
 
-		mc.getMCA().recalculateParticles(data);
-		mc.repaint();
-		
-		jan();
-		
-		mc.getMCA().doResampling();
-		mc.repaint();
+		return data;
 
 //		nextStep(client, data);
 	}
@@ -212,14 +228,14 @@ public class RobotServer
 	{
 		call(client, "Forward " + distance);
 		mc.getMCA().moveParticles(distance / 10);
-		measure(client, 3);
+		//measure(client, 3);
 	}
 
 	public void turn(java.net.Socket client, int theta) throws Exception
 	{
 		call(client, "Turn " + theta);
 		mc.getMCA().turnParticles(theta);
-		measure(client, 3);
+		//measure(client, 3);
 	}
 
 	public void delay(long delay)
