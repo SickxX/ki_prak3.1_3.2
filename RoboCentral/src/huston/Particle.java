@@ -11,6 +11,7 @@ import math.Vector;
 
 public class Particle {
 
+
 	public static final int TOTAL_PARTICLES = 50000;
 	
 	protected double x,y;
@@ -74,6 +75,7 @@ public class Particle {
 		{
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
 		g.fillOval((int)getX(),(int) getY(), 4, 4);
+
 		}//BLUE
 //		else
 //			g.setColor(new Color(0, 0, 1, (float)(probability)));
@@ -113,6 +115,7 @@ public class Particle {
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
+
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
 	}
 	public void penalize()
@@ -137,8 +140,7 @@ public class Particle {
 	 * @param theta angle the particle turns
 	 */
 	public void turnParticle(int theta) {
-				
 			setAngle((getAngle()+theta) % 360);			
-		
+
 	}
 }

@@ -19,7 +19,7 @@ public class MCA {
 	private float angle;
 	private Random rand1 = new Random();
 	private Map map;
-	
+
 	public MCA(Map map)
 	{
 		this.map = map;
@@ -29,20 +29,19 @@ public class MCA {
 	public ArrayList<Particle> getParticle(){
 		return partMenge;
 	}
-	
+
 	public void start()
 	{
-		generateParticles(Particle.TOTAL_PARTICLES);
-		
+		generateParticles(Particle.TOTAL_PARTICLES);		
 	}
-	
+
 
 	public void draw(Graphics g)
 	{
 		for(int i = 0; i < partMenge.size(); i++)
-		{
+		{ 
 			partMenge.get(i).draw(g,SCALE);
-			
+
 		}	
 
 	}
@@ -58,7 +57,7 @@ public class MCA {
 		partMenge.clear();
 
 		int i = 0;
-			
+
 
 		// --- Fill with random Particles
 		while( i < p ) {
@@ -73,7 +72,7 @@ public class MCA {
 			}
 		}
 	}
-	
+
 	public void recalculateParticles(ArrayList<SensorData> data)
 	{
 
@@ -85,17 +84,17 @@ public class MCA {
 			if(part.getError() > maxError) maxError = part.getError();
 			if(part.getError() < minError) minError = part.getError();
 		}
-		
+
 		for(Particle part : partMenge)
 		{
 			
 			part.normalize(maxError, minError);
-				if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
-				{
-					part.penalize();
-				}
+			if(!map.isInside((int)part.x, (int)part.y) || part.x < 0 || part.y < 0 || part.x > Map.WIDTH || part.y > Map.HEIGHT)
+			{
+				part.penalize();
+			}
 		}
-		
+
 	}
 
 
@@ -115,10 +114,10 @@ public class MCA {
 		}
 		return neL;
 	}
-	
+
 	public void doResampling()
 	{
-		
+
 		partMenge = resample();
 		System.out.println("Done resampling");
 	}
