@@ -55,7 +55,6 @@ public class RobotServer
 	public void connect() throws IOException 
 	{
 		System.out.println("Starting");
-		
 
 		int port = 8080;
 

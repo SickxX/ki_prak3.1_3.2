@@ -25,7 +25,6 @@ public class MCA {
 		this.map = map;
 	}
 
-
 	public ArrayList<Particle> getParticle(){
 		return partMenge;
 	}
