@@ -28,19 +28,19 @@ public class RobotServer
 	{
 		mc = new MapContainer();
 		mc.getMCA();
-		
+
 		RobotTest test = new RobotTest(mc.getMCA(), mc);
 		test.testPerformance();
-//		test.testenSIE();
-//		test.moveTest();
+		//		test.testenSIE();
+		//		test.moveTest();
 
 	}
-	
+
 	public RobotServer()
 	{
 		mc = new MapContainer();
 		mc.getMCA();
-		
+
 		//Conection
 		try {
 			connect();
@@ -48,16 +48,16 @@ public class RobotServer
 			e.printStackTrace(); 
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public void connect() throws IOException 
 	{
 		System.out.println("Starting");
 
 		int port = 8085;
-		
+
 		java.net.ServerSocket serverSocket = new java.net.ServerSocket(port);
 		System.out.println("Waiting...");
 		java.net.Socket client = waitForLogin(serverSocket);
@@ -83,14 +83,14 @@ public class RobotServer
 			System.out.println("---------Startet MCA");
 			delay(1000);
 			//2. Measure
-//			measure(client, 3);
+			//			measure(client, 3);
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
 			int minMovementDistance = 30;
 			ArrayList<SensorData> shit;
 			for(int i = 0; i < 20 ; i++) 
-			 {
+			{
 				shit = measure(client,5);
 				if(shit.get(0).getDistance() > minMovementDistance) {
 					doResample(shit);
@@ -103,16 +103,16 @@ public class RobotServer
 						turn(client, ThreadLocalRandom.current().nextInt(20, 181) * -1);
 					}
 				}
-				
-			
-				
+
+
+
 			}
 			//3. 
 			//3. 
 			call(client, "Kill");
 			System.out.println("KILLED");
 
-		 } catch(Exception e)	{
+		} catch(Exception e)	{
 			e.printStackTrace();
 			write(client, "Kill");
 			client.close();
@@ -120,22 +120,22 @@ public class RobotServer
 		}
 
 	}
-	
+
 	private void doResample(ArrayList<SensorData> data) {
 		mc.getMCA().recalculateParticles(data);
 		mc.repaint();
-		
+
 		jan();
-		
+
 		mc.getMCA().doResampling();
 		mc.repaint();
 	}
-	
+
 	private boolean coinFlip() {
 		return ThreadLocalRandom.current().nextDouble() > 0.5;
 	}
-	
-	
+
+
 
 	public String call(java.net.Socket socket, String command) throws Exception
 	{
@@ -189,7 +189,7 @@ public class RobotServer
 			call(client, "Look 0");
 			String c = call(client, "Distance");
 			String[] cData = c.split(" ");
-//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+			if(Utils.parseFloat(cData[1]) != -1 ) 
 				data.add(new SensorData(0, Utils.parseFloat(cData[1])));				
 		} else {
 			step = (double)(samplesize / 2);
@@ -200,19 +200,19 @@ public class RobotServer
 		int run = (int) step;
 		while(run > 0) {
 			call(client, "Look " + i);
-			
+
 			String c = call(client, "Distance");
 			String[] cData = c.split(" ");
-			
+
 			//um INFINITY auszuschlieﬂen eine If anweisung schreiben und die Messdaten einfach nicht verwenden
 			// sollte das nicht aufgrund unserer implementierung der SensorData auch funktionieren, wenn wir 
 			// keine Daten haben?
-//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+			if(Utils.parseFloat(cData[1]) != -1 )
 				data.add(new SensorData(i, Utils.parseFloat(cData[1])));				
 			call(client, "Look " + j);
 			c = call(client, "Distance");
 			cData = c.split(" ");
-//			if(Utils.parseFloat(cData[1]) != Float.POSITIVE_INFINITY ) 
+			if(Utils.parseFloat(cData[1]) != -1 )
 				data.add(new SensorData(j, Utils.parseFloat(cData[1])));				
 			i += 90 / run;
 			j -= 90 / run;
@@ -221,7 +221,7 @@ public class RobotServer
 
 		return data;
 
-//		nextStep(client, data);
+		//		nextStep(client, data);
 	}
 
 	public void move(java.net.Socket client, int distance) throws Exception
