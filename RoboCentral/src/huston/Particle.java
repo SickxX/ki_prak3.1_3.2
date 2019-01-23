@@ -12,7 +12,7 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 50000;
 	
 	protected double x,y;
 	protected double angle;
@@ -69,10 +69,16 @@ public class Particle {
 	}
 	
 	public void draw(Graphics g, float scale)
-	{
-		
+	{	
+		//RED
+		if (probability > 0.95 && probability <= 1 )	 
+		{
 		g.setColor(new Color(1, 0, 0, (float)(probability)));
-		g.fillOval((int)getX(),(int) getY(), 3, 3);
+		g.fillOval((int)getX(),(int) getY(), 4, 4);
+		}//BLUE
+//		else
+//			g.setColor(new Color(0, 0, 1, (float)(probability)));
+//			g.fillOval((int)getX(),(int) getY(), 4, 4);
 }
 
 	/**
@@ -90,13 +96,14 @@ public class Particle {
 			Vector closest =  map.closestIntersection(view);
 			
 			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
-			error += (Math.pow(distanceToClosest - d.getDistance(), 2));
+			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
+			//System.out.println("Error: " + error);
 //			System.out.println("CLOSEST " + closest);
 		}
 		
 
 	}
-	
+
 	public void normalize(double maxError, double minError)
 	{
 
@@ -105,11 +112,10 @@ public class Particle {
 		if (error < 1 )
 			probability = 1;
 		else
-			probability = prev * 1/error;
+			probability = 1- ((error - minError )/ ( maxError - minError));
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
 	}
-
 	public void penalize()
 	{
 		probability = 0;
@@ -132,10 +138,8 @@ public class Particle {
 	 * @param theta angle the particle turns
 	 */
 	public void turnParticle(int theta) {
-		if((getAngle()+theta) < 0 ) {
-			setAngle(360 +(getAngle()+theta));
-		}else if((getAngle()+theta) > 360){			
+				
 			setAngle((getAngle()+theta) % 360);			
-		}
+		
 	}
 }
