@@ -36,8 +36,8 @@ public class CommandCenter
 	{
 		//TeamRot: (Motor.B, 40).offset(80)
 		//TeamGelb: (Motor.B, 56).offset(60)
-		this.wheel1 = WheeledChassis.modelWheel(Motor.C, 56).offset(-60);
-		this.wheel2 = WheeledChassis.modelWheel(Motor.B, 56).offset(60);
+		this.wheel1 = WheeledChassis.modelWheel(Motor.C, 40).offset(-80);
+		this.wheel2 = WheeledChassis.modelWheel(Motor.B, 40).offset(80);
 		this.neck = Motor.A;
 		chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, WheeledChassis.TYPE_DIFFERENTIAL);
 		movePilot = new MovePilot(chassis);
@@ -84,7 +84,7 @@ public class CommandCenter
 	public void forward(int distance) 
 	{
 		distance *= .95;
-		movePilot.travel(-distance);
+		movePilot.travel(distance);
 		stop();
 	}
 	

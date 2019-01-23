@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 
 public class RobotClient
 {
-	private static final String IP = "10.0.1.16";
+	private static final String IP = "10.0.1.22";
 	public static void main(String[] args) throws Exception 
 	{	
 		RobotClient client = new RobotClient();

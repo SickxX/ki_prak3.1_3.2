@@ -12,7 +12,7 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 100000;
+	public static final int TOTAL_PARTICLES = 1;
 	public static final Random random = new Random();
 
 	protected double x,y;
