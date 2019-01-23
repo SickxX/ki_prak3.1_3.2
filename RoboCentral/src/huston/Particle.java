@@ -14,7 +14,8 @@ public class Particle {
 
 	public static final int TOTAL_PARTICLES = 10000;
 	public static final Random random = new Random();
-
+	public static final int TOLERANCE = 3;
+	
 	protected double x,y;
 	protected double angle;
 	private double probability;
@@ -101,7 +102,13 @@ public class Particle {
 			Vector closest =  map.closestIntersection(view);
 			
 			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
-			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
+			// --- Tolerances: 
+			double deltaDistance = Math.pow(distanceToClosest - d.getDistance(), 2);
+			if(deltaDistance <= Math.pow(TOLERANCE, 2))
+				error += 0;
+			else if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
+				error += Math.sqrt(deltaDistance -  Math.pow(TOLERANCE, 2));
+//			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
 			//System.out.println("Error: " + error);
 //			System.out.println("CLOSEST " + closest);
 		}
