@@ -2,8 +2,8 @@ package huston;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.color.ColorSpace;
 import java.util.ArrayList;
+import java.util.Random;
 
 import huston.Robot.SensorData;
 import math.Straight;
@@ -12,7 +12,8 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 50000;
+	public static final int TOTAL_PARTICLES = 1;
+	public static final Random random = new Random();
 	
 	protected double x,y;
 	protected double angle;
@@ -71,14 +72,19 @@ public class Particle {
 	public void draw(Graphics g, float scale)
 	{	
 		//RED
-		if (probability > 0.95 && probability <= 1 )	 
+//		new Color(new ColorSpace(ColorSpace.TYPE_HSV, 1), new float[] {(float)probability, 1f, 1f}, 1);
+		
+		if (probability > 0.80 && probability <= 1 )	 
 		{
-		g.setColor(new Color(1, 0, 0, (float)(probability)));
-		g.fillOval((int)getX(),(int) getY(), 4, 4);
+//		g.setColor(new Color(1, 0, 0, (float)(probability)));
+			g.setColor(Color.RED);
+			g.fillOval((int)getX(),(int) getY(), 4, 4);
 		}//BLUE
-//		else
+		else {
 //			g.setColor(new Color(0, 0, 1, (float)(probability)));
-//			g.fillOval((int)getX(),(int) getY(), 4, 4);
+		g.setColor(Color.BLUE);
+			g.fillOval((int)getX(),(int) getY(), 4, 4);
+		}
 }
 
 	/**
@@ -100,15 +106,39 @@ public class Particle {
 			//System.out.println("Error: " + error);
 //			System.out.println("CLOSEST " + closest);
 		}
-		
-
 	}
 
+	public ArrayList<Particle> mutate(int numberOfOffspring)
+	{
+		ArrayList<Particle> result = new ArrayList<>();
+		
+		result.add(new Particle(x, y, angle, probability));
+		
+		for(int i = 0; i < numberOfOffspring - 1; i++)
+		{
+			double newX = generateNewValue(x, Map.WIDTH);
+			double newY = generateNewValue(y, Map.HEIGHT);
+			double newAngel = generateNewValue(angle, 360);
+			
+			Particle son = new Particle(newX, newY, newAngel);
+			result.add(son);
+		}
+		
+		return result;
+	}
+	
+	private double generateNewValue(double val, int scale)
+	{
+		return (scale / 10) * (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
+	}
+	
 	public void normalize(double maxError, double minError)
 	{
-
+		
+		
 		double prev = probability;
 		
+//		
 		if (error < 1 )
 			probability = 1;
 		else

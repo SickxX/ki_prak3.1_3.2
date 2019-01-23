@@ -21,7 +21,7 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer();
+		server = new RobotServer(true);
 	}
 
 	public RobotServer(boolean t)
@@ -30,7 +30,7 @@ public class RobotServer
 		mc.getMCA();
 		
 		RobotTest test = new RobotTest(mc.getMCA(), mc);
-		test.testPerformance();
+		test.test1();
 //		test.testenSIE();
 //		test.moveTest();
 

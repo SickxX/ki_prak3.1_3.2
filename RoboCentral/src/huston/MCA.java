@@ -94,26 +94,30 @@ public class MCA {
 				{
 					part.penalize();
 				}
+				System.out.println(part.getProbabitlity());
 		}
 		
 	}
 
-
 	public ArrayList<Particle> resample()
 	{
-		ArrayList<Particle> neL = new ArrayList<Particle>();
+		ArrayList<Particle> newList = new ArrayList<Particle>();
 		// --- Resampling
 		System.out.println("partMenge.Size: " + partMenge.size());
-		while(neL.size() < partMenge.size()) 
+		while(newList.size() < partMenge.size()) 
 		{
 			int randomIndex = rand1.nextInt(partMenge.size());
-			if ( 1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
+			if(partMenge.get(randomIndex).getProbabitlity() < 0.90)
+			{
+				continue;
+			}
+			if (1 - partMenge.get(randomIndex).getProbabitlity() <= rand1.nextDouble()) 
 			{
 				Particle p = partMenge.get(randomIndex);
-				neL.add(new Particle(p.getX(), p.getY(), p.getAngle(), p.getProbabitlity()));
+				newList.addAll(p.mutate(3));
 			}
 		}
-		return neL;
+		return newList;
 	}
 	
 	public void doResampling()

@@ -1,0 +1,21 @@
+public ArrayList<Particle> mutate(int numberOfOffspring)
+	{
+		ArrayList<Particle> result = new ArrayList<>();
+
+		result.add(new Particle(x, y, angle, probability));
+
+		for(int i = 0; i < numberOfOffspring - 1; i++)
+		{
+			double newX = generateNewValue(x, Map.WIDTH);
+			double newY = generateNewValue(y, Map.HEIGHT);
+			double newAngel = generateNewValue(angle, 360);
+
+			Particle son = new Particle(newX, newY, newAngel);
+			result.add(son);
+		}
+
+		return result;
+	}
+
+
+  newList.addAll(p.mutate(3));
