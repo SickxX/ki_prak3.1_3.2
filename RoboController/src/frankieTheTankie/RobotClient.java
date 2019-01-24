@@ -58,6 +58,8 @@ public class RobotClient
 					msg += " ";
 					msg += commandCenter.distanceScan();
 					write(socket, msg);
+				}else if( command.equals("Color")) {
+					write(socket, commandCenter.colorScan());
 				}
 				else if(command.equals("Distance"))
 				{

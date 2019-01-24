@@ -86,33 +86,51 @@ public class RobotServer
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-			int minMovementDistance = 30;
+			int minMovementDistance = 20;
 			ArrayList<SensorData> data;
+			boolean init = true;
 			for(int i = 0; i < 20 ; i++) 
 			{
-				data = measure(client,5);
-				System.out.println("BLABLA" + data.get(0).getDistance());
-				if(data.get(0).getDistance() > minMovementDistance && data.get(0).getRotation() == 0) {
-					
+				String r = call(client, "Color"); 
+			
+				if(!isBlack(r)) {
+					data = measure(client,3);
 					doResample(data);
-					move(client,minMovementDistance * 10);
-//					doResample(data);
-				} else 
-				{
-					float maxDist = 0;
-					double rotation = 0;
-					for(SensorData sd : data) {
-						if( maxDist < sd.getDistance() && sd.getRotation() != 0)
-							maxDist = sd.getDistance();
-							rotation = sd.getRotation();
+					if(data.get(0).getDistance() > minMovementDistance && data.get(0).getRotation() == 0) {
+						
+						
+						move(client,(minMovementDistance) * 10);
+						
+						
+					} else 
+					{	
+					
+						turn(client, 180);
+						
+					
 					}
-					turn(client, (int) rotation);
+					
+					data.clear();
+					
+				} else {
+					int rotate = 2;
+					int step = 7;
+					while(true) {
+						String r2 = call(client, "Color"); 
+						
+						if(isBlack(r2)){
+							int factor = rotate % 2 == 1 ? -1 : 1;							
+							turn(client,  factor * rotate);
+							rotate += step;
+						} else {break;}
+						
+					}
+				
 					
 				}
-
-
-
 			}
+				
+				
 			//3. 
 			//3. 
 			call(client, "Kill");
@@ -132,15 +150,15 @@ public class RobotServer
 	}
 	
 	
-	
+	private boolean isBlack(String r) {
+		String[] tmp = r.split(" ");
+		return Float.parseFloat(tmp[1]) < 0.005;
+	}
 	
 
 	private void doResample(ArrayList<SensorData> data) {
 		mc.getMCA().recalculateParticles(data);
 		mc.repaint();
-
-		jan();
-
 		mc.getMCA().doResampling();
 		mc.repaint();
 	}
@@ -166,7 +184,7 @@ public class RobotServer
 		}
 		else // SensorData
 		{
-			System.out.println(answer);			
+			//System.out.println(answer);			
 		}
 		return answer;
 	}
@@ -232,9 +250,9 @@ public class RobotServer
 			j -= 90 / run;
 			run -= 1;
 		}
-		for (SensorData sensorData : data) {
-			System.out.println(sensorData.toString());
-		}
+//		for (SensorData sensorData : data) {
+//			System.out.println(sensorData.toString());
+//		}
 		
 
 		return data;

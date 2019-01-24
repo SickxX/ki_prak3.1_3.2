@@ -14,7 +14,7 @@ public class Particle {
 
 	public static final int TOTAL_PARTICLES = 200000;
 	public static final Random random = new Random();
-	public static final int TOLERANCE = 3;
+	public static final int TOLERANCE = 2;
 	
 	protected double x,y;
 	protected double angle;
@@ -95,21 +95,24 @@ public class Particle {
 	{
 		error = 0;
 //		System.out.println(this);
-		for(SensorData d: data)
-		{ 
-			Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle + d.getRotation())));	
-			Vector closest =  map.closestIntersection(view);
+		for(int i = 0; i < data.size(); i ++) {
 			
-			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
-			// --- Tolerances: 
-			double deltaDistance = Math.pow(distanceToClosest - d.getDistance(), 2);
-//			if(deltaDistance <= Math.pow(TOLERANCE, 2))
-//				error += 0;
-			if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
-				error += Math.sqrt(deltaDistance -  Math.pow(TOLERANCE, 2));
-//			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
-			//System.out.println("Error: " + error);
-//			System.out.println("CLOSEST " + closest);
+			if( data.get(i).getRotation() != 0) {
+				Straight view = new Straight(new Vector(x, y), new Vector(Utils.converteToRad(angle + data.get(i).getRotation())));	
+				Vector closest =  map.closestIntersection(view);
+				
+				double distanceToClosest = Vector.distance(new Vector(x, y), closest);
+				// --- Tolerances: 
+				double deltaDistance = Math.pow(distanceToClosest - data.get(i).getDistance(), 2);
+//				if(deltaDistance <= Math.pow(TOLERANCE, 2))
+//					error += 0;
+				if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
+					error += Math.sqrt(deltaDistance -  Math.pow(TOLERANCE, 2));
+//				error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
+				//System.out.println("Error: " + error);
+//				System.out.println("CLOSEST " + closest);
+			}
+		
 		}
 	}
 
@@ -148,7 +151,7 @@ public class Particle {
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
 //		System.out.println("Probability before sigmoid: " + probability);
-		probability = Utils.activationFunction(probability);
+		//probability = Utils.activationFunction(probability);
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
 //		System.out.println("ERROR: " + error + " Probability: " + probability);
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);

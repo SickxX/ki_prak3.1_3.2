@@ -62,7 +62,7 @@ public class CommandCenter
 		
 		colorProvider.fetchSample(colorSample, 0);
 		rgb = "R: " + colorSample[0]+ " G: " + colorSample[1] +" B: " + colorSample[2];
-
+		
 		Delay.msDelay(500);
 
 		System.out.println("Scan finished!");
