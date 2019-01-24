@@ -74,6 +74,8 @@ public class CommandCenter
 		sample = new float[sampleProvider.sampleSize()];
 		sampleProvider.fetchSample(sample, 0);
 		distanceValue = (float) sample[0];
+		if (distanceValue * 100 == Float.POSITIVE_INFINITY)
+			distanceValue = -1;
 		return "Distance: " + distanceValue *100;
 
 	}

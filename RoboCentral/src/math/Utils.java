@@ -14,7 +14,7 @@ public class Utils
 	
 	public static float parseFloat(String f)
 	{
-		System.out.println("parsing: " + f);
+//		System.out.println("parsing: " + f);
 		try {
 			return Float.parseFloat(f);			
 		}

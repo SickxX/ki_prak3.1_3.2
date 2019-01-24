@@ -21,7 +21,7 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer(true);
+		server = new RobotServer();
 	}
 
 	public RobotServer(boolean t)
@@ -69,42 +69,50 @@ public class RobotServer
 
 			//1. Partikel erzeugen
 			mc.getMCA().start();
-			mc.getMCA().addParticle(new Particle(25, 75, 90));
+//			mc.getMCA().addParticle(new Particle(25, 75, 90));
 			mc.repaint();
 			System.out.println("---------Startet MCA");
 			delay(1000);
 			//2. Measure
-			mc.getMCA().recalculateParticles(measure(client, 5));
-			mc.repaint();
-			mc.getMCA().doResampling();
-			mc.repaint();
-			move(client, 500);
-			move(client, 500);
-			move(client, 500);
-			move(client, 500);
+//			mc.getMCA().recalculateParticles(measure(client, 5));
+//			mc.repaint();
+//			mc.getMCA().doResampling();
+//			mc.repaint();
+//			move(client, 500);
+//			move(client, 500);
+//			move(client, 500);
+//			move(client, 500);
 			
 			System.out.println("---------Measure");
 			delay(1000);
 			//3. Action
-//			int minMovementDistance = 30;
-//			ArrayList<SensorData> data;
-//			for(int i = 0; i < 20 ; i++) 
-//			{
-//				data = measure(client,5);
-//				if(data.get(0).getDistance() > minMovementDistance) {
-//					doResample(data);
-//					move(client,minMovementDistance * 10);
-//				} else 
-//				{
-//					double maxDist = 0;
+			int minMovementDistance = 30;
+			ArrayList<SensorData> data;
+			for(int i = 0; i < 20 ; i++) 
+			{
+				data = measure(client,5);
+				System.out.println("BLABLA" + data.get(0).getDistance());
+				if(data.get(0).getDistance() > minMovementDistance && data.get(0).getRotation() == 0) {
 					
-//					
-//					
-//				}
-//
-//
-//
-//			}
+					doResample(data);
+					move(client,minMovementDistance * 10);
+//					doResample(data);
+				} else 
+				{
+					float maxDist = 0;
+					double rotation = 0;
+					for(SensorData sd : data) {
+						if( maxDist < sd.getDistance() && sd.getRotation() != 0)
+							maxDist = sd.getDistance();
+							rotation = sd.getRotation();
+					}
+					turn(client, (int) rotation);
+					
+				}
+
+
+
+			}
 			//3. 
 			//3. 
 			call(client, "Kill");
@@ -195,7 +203,7 @@ public class RobotServer
 			call(client, "Look 0");
 			String c = call(client, "Distance");
 			String[] cData = c.split(" ");
-			if(Utils.parseFloat(cData[1]) != -1 ) 
+			if(Utils.parseFloat(cData[1]) >0 ) 
 				data.add(new SensorData(0, Utils.parseFloat(cData[1])));				
 		} else {
 			step = (double)(samplesize / 2);
@@ -213,17 +221,21 @@ public class RobotServer
 			//um INFINITY auszuschließen eine If anweisung schreiben und die Messdaten einfach nicht verwenden
 			// sollte das nicht aufgrund unserer implementierung der SensorData auch funktionieren, wenn wir 
 			// keine Daten haben?
-			if(Utils.parseFloat(cData[1]) != -1 )
+			if(Utils.parseFloat(cData[1]) >0 )
 				data.add(new SensorData(i, Utils.parseFloat(cData[1])));				
 			call(client, "Look " + j);
 			c = call(client, "Distance");
 			cData = c.split(" ");
-			if(Utils.parseFloat(cData[1]) != -1 )
+			if(Utils.parseFloat(cData[1]) >0 )
 				data.add(new SensorData(j, Utils.parseFloat(cData[1])));				
 			i += 90 / run;
 			j -= 90 / run;
 			run -= 1;
 		}
+		for (SensorData sensorData : data) {
+			System.out.println(sensorData.toString());
+		}
+		
 
 		return data;
 
@@ -234,7 +246,7 @@ public class RobotServer
 	{
 		call(client, "Forward " + distance);
 		mc.getMCA().moveParticles(distance / 10);
-		mc.getMCA().recalculateParticles(measure(client, 5));
+		//mc.getMCA().recalculateParticles(measure(client, 5));
 		mc.repaint();
 		mc.getMCA().doResampling();
 		mc.repaint();
@@ -245,7 +257,7 @@ public class RobotServer
 	{
 		call(client, "Turn " + theta);
 		mc.getMCA().turnParticles(theta);
-		measure(client, 3);
+		//measure(client, 3);
 	}
 
 	public void delay(long delay)

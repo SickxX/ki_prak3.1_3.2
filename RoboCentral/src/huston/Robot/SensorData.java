@@ -18,4 +18,9 @@ public class SensorData
 	public float getDistance() {
 		return distance;
 	}
+	
+	public String toString() {
+		
+		return ("Rotation: " + rotation + " Distance: " + distance);
+	}
 }
