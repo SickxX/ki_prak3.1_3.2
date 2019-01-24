@@ -12,7 +12,7 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 10000;
+	public static final int TOTAL_PARTICLES = 100000;
 	public static final Random random = new Random();
 	public static final int TOLERANCE = 3;
 	
@@ -81,7 +81,7 @@ public class Particle {
 		}//BLUE
 		else {
 //			g.setColor(new Color(0, 0, 1, (float)(probability)));
-		g.setColor(Color.BLUE);
+			g.setColor(Color.BLUE);
 			g.fillOval((int)getX(),(int) getY(), 4, 4);
 		}
 }
@@ -103,9 +103,9 @@ public class Particle {
 			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
 			// --- Tolerances: 
 			double deltaDistance = Math.pow(distanceToClosest - d.getDistance(), 2);
-			if(deltaDistance <= Math.pow(TOLERANCE, 2))
-				error += 0;
-			else if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
+//			if(deltaDistance <= Math.pow(TOLERANCE, 2))
+//				error += 0;
+			if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
 				error += Math.sqrt(deltaDistance -  Math.pow(TOLERANCE, 2));
 //			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
 			//System.out.println("Error: " + error);
@@ -147,10 +147,10 @@ public class Particle {
 			probability = 1;
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
-		
+//		System.out.println("Probability before sigmoid: " + probability);
 		probability = Utils.activationFunction(probability);
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
-
+//		System.out.println("ERROR: " + error + " Probability: " + probability);
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);
 	}
 	public void penalize()
