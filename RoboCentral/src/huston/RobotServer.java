@@ -21,7 +21,7 @@ public class RobotServer
 	public static void main(String[] args) throws IOException 
 	{
 		// instance of map and graphics and stuff
-		server = new RobotServer();
+		server = new RobotServer(true);
 	}
 
 	public RobotServer(boolean t)

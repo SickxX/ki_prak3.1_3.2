@@ -12,9 +12,10 @@ import math.Vector;
 
 public class Particle {
 
-	public static final int TOTAL_PARTICLES = 1;
+	public static final int TOTAL_PARTICLES = 10000;
 	public static final Random random = new Random();
-
+	public static final int TOLERANCE = 3;
+	
 	protected double x,y;
 	protected double angle;
 	private double probability;
@@ -100,7 +101,13 @@ public class Particle {
 			Vector closest =  map.closestIntersection(view);
 			
 			double distanceToClosest = Vector.distance(new Vector(x, y), closest);
-			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
+			// --- Tolerances: 
+			double deltaDistance = Math.pow(distanceToClosest - d.getDistance(), 2);
+			if(deltaDistance <= Math.pow(TOLERANCE, 2))
+				error += 0;
+			else if(Math.abs(deltaDistance) >  Math.pow(TOLERANCE, 2))
+				error += Math.sqrt(deltaDistance -  Math.pow(TOLERANCE, 2));
+//			error += Math.sqrt((Math.pow(distanceToClosest - d.getDistance(), 2)));
 			//System.out.println("Error: " + error);
 //			System.out.println("CLOSEST " + closest);
 		}
@@ -127,7 +134,7 @@ public class Particle {
 	
 	private double generateNewValue(double val, int scale)
 	{
-		return (scale / 10) * (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
+		return (random.nextDouble() * ((val + (1 - probability)) - (val - (1 - probability)))) + (val - (1 - probability));
 	}
 	
 	public void normalize(double maxError, double minError)
@@ -136,10 +143,12 @@ public class Particle {
 		
 		double prev = probability;
 		
-		if (error < 1 )
+		if (error == 0 )
 			probability = 1;
 		else
 			probability = 1- ((error - minError )/ ( maxError - minError));
+		
+		probability = Utils.activationFunction(probability);
 //		probability = prev * ( 1 - ( ( error - minError) / ( maxError - minError ) ));
 
 		//System.out.println("minmaxGEDÖNS " + minError + " "+ maxError);

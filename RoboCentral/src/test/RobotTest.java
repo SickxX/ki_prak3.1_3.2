@@ -178,7 +178,7 @@ public class RobotTest
 		mock.clear();
 		mock.add(new SensorData(0, 125));
 		mock.add(new SensorData(-90, 75));
-		mock.add(new SensorData(90, 75));
+		mock.add(new  SensorData(90, 75));
 		
 		mca.recalculateParticles(mock);
 		mca.doResampling();

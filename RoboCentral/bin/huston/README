@@ -1,0 +1,3 @@
+Wir müssen dürfen zu große distanzen vom Roboter nicht übernehmen, da diese
+ mit NaN / Infinity zurückkommen und von uns als MaxFloat gedeutet werden. 
+ Die Partikel bekommen aber reale werte raus und denken sie sind Falsch...
